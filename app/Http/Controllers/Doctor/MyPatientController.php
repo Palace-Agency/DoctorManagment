@@ -260,6 +260,7 @@ class MyPatientController extends Controller
                             $periodStart->addMinutes($difftime->duree_appointments);
                         }
                         if ($currentDate->isToday()) {
+                            // echo "hello";
                             $isNot = true;
                             foreach ($period as $key => $datetime) {
                                 if ($datetime->greaterThan($now)) {
@@ -273,7 +274,9 @@ class MyPatientController extends Controller
                             }
                         }
                     }
-
+                    if($work->day_off == 'active'){
+                        $period = [];
+                    }
                     $flag = 1;
                     $checkday = $work->day_off === "disable";
                 }

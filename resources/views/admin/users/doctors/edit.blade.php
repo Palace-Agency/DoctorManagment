@@ -51,7 +51,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-6 select-box-city mt-2">
+                                <div class="col-4 select-box-city mt-2">
                                     <label class="form-label" for="validationTooltip04">City <span class="text-danger">*</span></label>
                                     <select data-live-search="true"   class="form-select @error('city_id') is-invalid @enderror" name="city_id">
                                         <option selected disabled>Choose...</option>
@@ -66,7 +66,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-sm-6 mt-2">
+                                <div class="col-sm-4 mt-2">
                                 <label class="form-label" >Phone number<span class="txt-danger">*</span></label>
                                 <input class="form-control @error('phone') is-invalid @enderror" value="{{$doctor->phone_number}}" name="phone"  type="text" placeholder="Enter your phone number">
                                 @error('phone')
@@ -75,7 +75,19 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                <div class="col-md-4 mt-2">
+                                    <label class="form-label" for="validationTooltip04">Gender <span class="text-danger">*</span></label>
+                                    <select class="form-select  @error('gender') is-invalid @enderror" name="gender">
+                                        <option selected disabled>Choose...</option>
+                                        <option  {{$doctor->gender ==="man" ? 'selected' :''}} value="man">Man</option>
+                                        <option {{$doctor->gender ==="women" ? 'selected' :''}} value="women">Women </option>
+                                    </select>
+                                    @error('gender')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
 
                                 <div class="col-md-8 mt-2">
                                     <label class="form-label" >Adress du cabinet<span class="txt-danger">*</span></label>
@@ -95,6 +107,7 @@
                                         </span>
                                     @enderror
                                 </div>
+
                                 <div class="col-md-4 mt-2">
                                     <label class="form-label" for="validationTooltip04">languages speak<span class="text-danger">*</span></label>
                                     <select data-live-search="true" name="languages[]" multiple class="form-select @error('languages') is-invalid @enderror" id="languages">
@@ -110,19 +123,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-4 mt-2">
-                                    <label class="form-label" for="validationTooltip04">Gender <span class="text-danger">*</span></label>
-                                    <select class="form-select  @error('gender') is-invalid @enderror" name="gender">
-                                        <option selected disabled>Choose...</option>
-                                        <option  {{$doctor->gender ==="man" ? 'selected' :''}} value="man">Man</option>
-                                        <option {{$doctor->gender ==="women" ? 'selected' :''}} value="women">Women </option>
-                                    </select>
-                                    @error('gender')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+
                                 <div class="col-md-4 mt-2">
                                     <label class="form-label" for="validationTooltip04">Specialities <span class="text-danger">*</span></label>
                                     <select data-live-search="true" name="specialities[]" multiple class="form-select @error('specialities') is-invalid @enderror" id="speciality">
@@ -137,8 +138,18 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                    <div id="speciality-feedback" class="text-danger"></div>
 
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    <label class="form-label" for="validationTooltip04">Motif<span class="text-danger">*</span></label>
+                                    <select name="motifs[]" multiple class="form-select @error('motifs') is-invalid @enderror" id="motifs">
+                                        <!-- Options will be dynamically populated based on the selected specialities -->
+                                    </select>
+                                    @error('motifs')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-12 mt-2">
                                     <label class="col-form-label">picture</label>
@@ -201,23 +212,53 @@
 @section('script')
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
 <script>
-    new MultiSelectTag('speciality')  // id
+    //new MultiSelectTag('speciality')  // id
     new MultiSelectTag('languages')  // id
 </script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-    var passwordInput = document.getElementById("passwordInput");
-    var showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
+        var passwordInput = document.getElementById("passwordInput");
+        var showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
 
-    showPasswordCheckbox.addEventListener("change", function() {
-        if (showPasswordCheckbox.checked) {
-            passwordInput.type = "text";
-        } else {
-            passwordInput.type = "password";
-        }
+        showPasswordCheckbox.addEventListener("change", function() {
+            if (showPasswordCheckbox.checked) {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        });
     });
-});
+
+    function handleSpecialitySelection() {
+            var selectedSpecialities = $('#speciality').val();
+
+            // Hide all motifs initially
+            $('#motifs').empty();
+
+            // Show motifs associated with selected specialities
+            $.each(selectedSpecialities, function(index, specialityId){
+                var specialityName = $('#speciality option[value="' + specialityId + '"]').text();
+                $('#motifs').append('<optgroup label="' + specialityName + '"></optgroup>');
+
+                // Filter motifs for the selected speciality and populate the dropdown
+                   @foreach($motifs as $motif)
+                        if({{ $motif->speciality_id }} == specialityId) {
+                            @if(empty($selectedmotifs) || is_null($selectedmotifs))
+                                $('#motifs optgroup[label="' + specialityName + '"]').append('<option value="{{ $motif->id }}">{{ $motif->nom_motif }}</option>');
+                            @else
+                                $('#motifs optgroup[label="' + specialityName + '"]').append('<option {{in_array( $motif->id ,$selectedmotifs) ? "selected" :"" }} value="{{ $motif->id }}">{{ $motif->nom_motif }}</option>');
+                            @endif
+                        }
+                    @endforeach
+            });
+        }
+
+        // Trigger the speciality selection handler on page load
+        handleSpecialitySelection();
+
+        // Attach the speciality selection handler to the change event
+        $('#speciality').change(handleSpecialitySelection);
 
 </script>
 @endsection

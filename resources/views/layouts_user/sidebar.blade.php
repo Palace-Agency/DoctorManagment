@@ -3,7 +3,7 @@
     <div>
         <div class="logo-wrapper">
             <a href="index.html">
-                <img class=" w-50 img-fluid" src="{{ asset('images/logo/landing_logo.png') }}" alt="">
+                <img class=" img-fluid" src="{{ asset('images/logo/landing_logo.png') }}" alt="">
                 {{-- <img class="img-fluid" src="{{ asset('assets/images/logo/logo_light.png') }}" alt=""> --}}
             </a>
         </div>

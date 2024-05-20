@@ -53,10 +53,11 @@ class HomeController extends Controller
         $serializedmotifs = $parametre->motifs_id;
         $selectedmotifs = unserialize($serializedmotifs);
         $difftime = Parametre::where('doctor_id', $idDoctor)->first();
-        $appointments = Appointment::where('doctor_id', $idDoctor)->get();
+        $appointments = Appointment::where('doctor_id', $idDoctor)->where('status' ,'!=','cancelled')->get();
         $motifs = Motif::whereIn('id', $selectedmotifs)->get();
         $specialities = Speciality::whereIn('id', $selectedSpecialities)->get();
         $workhours = WorkingHour::where('doctor_id',$idDoctor)->get();
+        // dd($workhours);
         $holidays = Vacation::where('doctor_id',$idDoctor)->get();
         return view('doctor-profile',compact('doctor','parametre','specialities', 'selectedlanguages','motifs','workhours','holidays','difftime', 'appointments'));
 
@@ -101,7 +102,7 @@ class HomeController extends Controller
 
 
                     return view('results', compact('doctors'));
-                
+
             } else {
                 return redirect()->back()->with('danger', 'Speciality or City not found');
             }

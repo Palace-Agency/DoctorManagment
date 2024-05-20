@@ -1,18 +1,19 @@
 <div class="sidebar-wrapper" data-layout="stroke-svg">
     <div>
-        <div class="logo-wrapper"><a href="index.html"><img class="img-fluid"
-                    src="{{ asset('assets/images/logo/logo_light.png') }}" alt=""></a>
-            <div class="back-btn"><i class="fa fa-angle-left"></i></div>
-            <div class="toggle-sidebar">
+        <div class="logo-wrapper"><a href="index.html">
+            <img class=" img-fluid" src="{{ asset('images/logo/landing_logo.png') }}" alt="">
+</a>
+            {{-- <div class="back-btn"><i class="fa fa-angle-left"></i></div> --}}
+            {{-- <div class="toggle-sidebar">
                 <svg class="stroke-icon sidebar-toggle status_toggle middle">
                     <use href="{{ asset('assets/svg/icon-sprite.svg#toggle-icon') }}"></use>
                 </svg>
                 <svg class="fill-icon sidebar-toggle status_toggle middle">
                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-toggle-icon') }}"></use>
                 </svg>
-            </div>
+            </div> --}}
         </div>
-        <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid"
+        <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" 
                     src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a></div>
         <nav class="sidebar-main">
             <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
@@ -33,7 +34,7 @@
                             <h6 class="lan-1">General</h6>
                         </div>
                     </li>
-                    
+
                         <li class="sidebar-list">
                             <i class="fa fa-thumb-tack"></i>
                             <a class="sidebar-link sidebar-title link-nav" href="#">
@@ -45,6 +46,7 @@
                                 </svg><span>Dashboard</span>
                             </a>
                         </li>
+
                         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
                                 class="sidebar-link sidebar-title link-nav" href="{{ route('permission.index') }}">
                                 <svg class="stroke-icon">
@@ -52,7 +54,10 @@
                                 </svg>
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
-                                </svg><span>Permissions</span></a></li>
+                                </svg><span>Permissions</span></a>
+                        </li>
+
+
                         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
                             <a class="sidebar-link sidebar-title link-nav" href="{{ route('role.index') }}">
                                 <svg class="stroke-icon">

@@ -90,7 +90,7 @@
                 @endif
 
             <div>
-                <div><a class="logo" href="index.html"><img class="img-fluid for-light" src="../assets/images/logo/logo.png" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
+                <div><a class="logo" href="index.html"><img class="img-fluid for-light" style="width: 50%;" src="{{asset("images/logo/landing_page.png")}}" alt="looginpage"><img class="img-fluid for-dark" src="../assets/images/logo/logo_dark.png" alt="looginpage"></a></div>
                 <div class="login-main">
                 <form class="theme-form"  method="POST" action="{{ route('login') }}">
                     @csrf

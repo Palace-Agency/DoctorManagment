@@ -83,7 +83,7 @@
     <div class="col-12 p-0">
         <div class="login-card login-dark">
         <div>
-            <div><a class="logo" href="index.html"><img class="img-fluid for-light w-25" src="{{asset("images/logo/landing_logo.png")}}" alt="looginpage"><img class="img-fluid for-dark" src="{{asset("assets/images/logo/logo_dark.png")}}" alt="looginpage"></a></div>
+            <div><a class="logo" href="index.html"><img class="img-fluid for-light w-25" src="{{asset("images/logo/landing_page.png")}}" alt="looginpage"><img class="img-fluid for-dark" src="{{asset("assets/images/logo/logo_dark.png")}}" alt="looginpage"></a></div>
             <div class="login-main" style="width: 600px">
             <form class="theme-form" method="POST" action="{{ route('register') }}">
                 @csrf

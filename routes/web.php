@@ -211,6 +211,7 @@ Route::group(['middleware'=>'auth'],function(){
         Route::get('/patient-doctor', 'showDoctor')->name('doctor');
         Route::get('/get-doctor/{iddoc}','getDoc')->name('get-doctor');
         Route::get('/patient-ordonnance', 'showOrdonnance')->name('ordonnance');
+        Route::post('/appointment/cancelle/{idappointment}','changeStatus')->name('cancelle');
     });
 
 });

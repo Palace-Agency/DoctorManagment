@@ -118,4 +118,12 @@ class ClientController extends Controller
         return view('patient.ordonnanceDoc',compact('ordonnances'));
     }
 
+    public function changeStatus(Request $request ,$id){
+        $appointment =Appointment::findOrFail($id);
+        $appointment->status = $request->status;
+        $appointment->update();
+        return redirect()->route('client.appointment')->with("success", "the account has been updated successfully");
+
+    }
+
 }

@@ -155,12 +155,12 @@
                                                                 )->daysInMonth;
                                                             @endphp
                                                             <div class="owl-carousel owl-theme" id="owl-carousel-13">
-                                                                @for($month = $currentMonth ; $month <= $currentMonth +1;$month ++)
+                                                                @for($month = $currentMonth ; $month <= $currentMonth +5;$month ++)
                                                                     @for($day = $currentMonth == $month ? $now->day : 1 ; $day < $daysInMonth ; $day++)
                                                                         @php
                                                                             $currentDate = Carbon\Carbon::createFromDate(
                                                                                 $currentYear,
-                                                                                $currentMonth,
+                                                                                $month,
                                                                                 $day,
                                                                             );
                                                                             $fullDayName = $currentDate->format('l');
@@ -202,6 +202,9 @@
                                                                                                         }
                                                                                                         if ($isNot) { $period = []; }
                                                                                                     }
+                                                                                                }
+                                                                                                if($work->day_off == 'active'){
+                                                                                                    $period = [];
                                                                                                 }
                                                                                                 $flag = 1;
                                                                                                 $checkday = $work->day_off === 'disable';

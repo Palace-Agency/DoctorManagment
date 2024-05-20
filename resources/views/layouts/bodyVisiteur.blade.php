@@ -31,10 +31,10 @@
             <div class="container-fluid p-0">
                 <div class="header">
                     <header>
-                        <nav class="navbar navbar-b navbar-dark navbar-trans navbar-expand-xl fixed-top nav-padding"
+                        <nav class="p-2 navbar navbar-b navbar-dark navbar-trans navbar-expand-xl fixed-top nav-padding"
                             id="sidebar-menu">
                             <a class=" p-0" href="{{route('homepage')}}">
-                                <img class=" w-50" src="{{ asset('images/logo/landing_logo.png') }}" alt="">
+                                <img class="mr-5 w-50" src="{{ asset('images/logo/landing_page.png') }}" alt="">
                             </a>
                             <button class="navbar-toggler navabr_btn-set custom_nav" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault"

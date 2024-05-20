@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Motif;
 use App\Models\Parametre;
 use App\Models\Speciality;
 use App\Models\User;
@@ -82,7 +83,8 @@ class DoctorController extends Controller
         $selectedSpecialities = unserialize($serializedSpecialities);
         $serializedlanguages = $parametres->language_spoken;
         $selectedlanguages = unserialize($serializedlanguages);
-        return view('admin.users.doctors.edit', compact('specialities' ,'doctor','selectedSpecialities', 'selectedlanguages'));
+        $motifs = Motif::all();
+        return view('admin.users.doctors.edit', compact('specialities' ,'doctor','selectedSpecialities', 'selectedlanguages','motifs'));
     }
 
     public function update(Request $request,$iddoctor){
@@ -91,12 +93,13 @@ class DoctorController extends Controller
             'lname' => 'required',
             'city_id' => 'required',
             'phone' => 'required',
-            'adresse' => 'required|min:5|max:40',
+            'adresse' => 'required|min:5',
             'specialities' => 'required',
             'languages' => 'required',
+            'motifs' => 'required|array|min:1',
             'gender' => 'required',
             'zip_code' => 'required|min:5|max:6',
-            'password' => 'required|min:8|max:16|confirmed',
+            'password' => 'required|min:8|confirmed',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
 
         ]);
@@ -128,14 +131,17 @@ class DoctorController extends Controller
 
         $selectedlanguages = $request->input('languages');
         $serializedlanguages = serialize($selectedlanguages);
+
         $selectedspeciality = $request->input('specialities');
         $serializedspeciality = serialize($selectedspeciality);
-        Parametre::create([
-            'doctor_id' => $user->id,
-            'language_spoken' => $serializedlanguages,
-            'speciality_id' => $serializedspeciality,
+        $selectedmotifs = $request->input('motifs');
+        $serializedmotifs = serialize($selectedmotifs);
 
-        ]);
+        $parametre = Parametre::where('doctor_id', $iddoctor)->first();
+        $parametre->language_spoken = $serializedlanguages ?? $parametre->language_spoken;
+        $parametre->speciality_id = $serializedspeciality ?? $parametre->speciality_id;
+        $parametre->motifs_id = $serializedmotifs ?? $parametre->motifs_id;
+        $parametre->update();
         return redirect()->route('doctor.index')->with("success", "the account is Updated successfully");
 
     }
