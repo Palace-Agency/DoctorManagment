@@ -1,4 +1,12 @@
 @extends('layouts.bodyVisiteur')
+@section('links')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <style>
+        #map { height: 300px; }
+     </style>
+@endsection
 @section('content')
 
     <div class="content-wrapper">
@@ -309,20 +317,87 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" style="max-height: 400px">
+                            <div class="col-md-5 m-3">
+                                  <div class="carousel slide" id="carouselExampleControls" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach ($pictures as $index => $pic)
+                                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                                <img class="d-block w-100" src="{{ asset($pic->picture) }}" alt="drawing-room">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 m-3">
+                                 <div id="map"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 @endsection
 
 
 
 @section('script')
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
     <script>
+        async function getCoordinates(address) {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+            const data = await response.json();
+            if (data.length > 0) {
+                return {
+                    lat: data[0].lat,
+                    lon: data[0].lon
+                };
+            } else {
+                throw new Error('Address not found');
+            }
+        }
+
+        async function initializeMap(address) {
+            try {
+                const coords = await getCoordinates(address);
+                const map = L.map('map').setView([coords.lat, coords.lon], 13);
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+
+                L.marker([coords.lat, coords.lon]).addTo(map)
+                    .bindPopup(`<b>${address}</b>`)
+                    .openPopup();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+         var city = "{{ $doctor->city->nom_city }}";
+        var address = "{{ $doctor->address }}";
+        var zip_code = "{{ $doctor->zip_code }}";
+        const fullAddress = `${zip_code}, ${address}, ${city}`;
+    
+        initializeMap(fullAddress);
+    </script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
     $(document).ready(function() {
         $('#test').on('click',function(){
             var isAuthenticated = {{ Auth::check() ? 'true' : 'false' }};

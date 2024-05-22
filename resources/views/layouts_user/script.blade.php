@@ -115,5 +115,7 @@
 <script src="{{asset('assets/js/form-wizard/form-wizard.js')}}"></script>
 <script src="{{asset('assets/js/form-wizard/image-upload.js')}}"></script>
 
+
+
 @yield('script')
 

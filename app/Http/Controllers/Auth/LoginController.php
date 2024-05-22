@@ -47,7 +47,7 @@ class LoginController extends Controller
         //     return redirect()->route('login')->with('danger', 'Your account is not activated.');
         // }
         if ($user->hasRole('admin')) {
-            return redirect()->route('doctor.index')->with('success', 'Welcome to the dashboard');
+            return redirect()->route('admin.dash')->with('success', 'Welcome to the dashboard');
         } elseif($user->hasRole('doctor')) {
             return redirect()->route('cabinet.dash')->with('success', 'Logged in successfully');
         }elseif($user->hasRole('patient')){

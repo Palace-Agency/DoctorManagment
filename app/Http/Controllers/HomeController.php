@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\City;
 use App\Models\Motif;
 use App\Models\Parametre;
+use App\Models\Picture;
 use App\Models\Speciality;
 use App\Models\User;
 use App\Models\Vacation;
@@ -57,9 +58,10 @@ class HomeController extends Controller
         $motifs = Motif::whereIn('id', $selectedmotifs)->get();
         $specialities = Speciality::whereIn('id', $selectedSpecialities)->get();
         $workhours = WorkingHour::where('doctor_id',$idDoctor)->get();
-        // dd($workhours);
+        $pictures = Picture::where('doctor_id', $idDoctor)->get();
+        // dd($pictures);
         $holidays = Vacation::where('doctor_id',$idDoctor)->get();
-        return view('doctor-profile',compact('doctor','parametre','specialities', 'selectedlanguages','motifs','workhours','holidays','difftime', 'appointments'));
+        return view('doctor-profile',compact('doctor','parametre','specialities', 'selectedlanguages','motifs','workhours','holidays','difftime', 'appointments', 'pictures'));
 
     }
 

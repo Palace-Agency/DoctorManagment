@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Admin\MotifController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SpecialityController;
 use App\Http\Controllers\Auth\RegisterDoctorController;
+use App\Http\Controllers\Doctor\DashboardDocController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdonnanceController;
 use App\Http\Controllers\Patient\ClientController;
@@ -61,6 +63,7 @@ Route::get('/all-doctors', [HomeController::class, 'allDoctors'])->name('alldoct
 Route::group(['middleware'=>'auth'],function(){
     Route::get('generate-pdf/{idordonnance}',[OrdonnanceController::class, 'generatePdf'])->name('pdf.ordonnance');
     Route::prefix('/admin')->middleware('role:admin')->group( function(){
+        Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dash');
         Route::resource('permission', PermissionController::class);
         Route::delete('/permission/{idpermission}/delete', [PermissionController::class, 'destroy'])->name('permission.destroy');
 
@@ -114,7 +117,7 @@ Route::group(['middleware'=>'auth'],function(){
     });
 
     Route::prefix('/doctor')->middleware('role:doctor|employee')->group(function(){
-        Route::get('/',[CabinetController::class,"index"])->name('cabinet.dash');
+        Route::get('/',[DashboardDocController::class,"index"])->name('cabinet.dash');
         Route::prefix('/category-expenses')->controller(CategoryExpenseController::class)->name('categoryexpense.')->group(function(){
             Route::get('','index')->name('index');
             Route::get('/create','create')->name('create');

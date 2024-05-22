@@ -27,7 +27,7 @@
                                             <option disabled selected>Choose category</option>
                                             @if($categoryexps)
                                                 @foreach($categoryexps as $categoryexp)
-                                                    <option {{$expense->category_expenses_id === $categoryexp->id ? 'selected':''}} value="{{ $categoryexp->id }}">{{ $categoryexp->name }}</option>
+                                                    <option {{$expense->category_expense_id == $categoryexp->id ? 'selected':''}} value="{{ $categoryexp->id }}">{{ $categoryexp->name }}</option>
                                                 @endforeach
                                             @else
                                                 <option value="" disabled>No categories available</option>

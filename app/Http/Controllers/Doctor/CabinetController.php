@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\File;
 
 class CabinetController extends Controller
 {
-    public function index()
-    {
-
-        return view('doctor.dashboard',);
-    }
+    
 
     public function profile(){
         $specialities = Speciality::all();

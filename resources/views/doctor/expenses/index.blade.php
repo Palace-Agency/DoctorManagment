@@ -65,13 +65,13 @@
                                                                     class="fa fa-ellipsis-v text-black"></i></a>
                                                             <div class="dropdown-menu tx-13">
                                                                 @if ($expense->status != 'paid')
-                                                                    <form class="statusformexp" style="margin: 0%" data-expense-id="{{ $expense->id }}">
+                                                                    <form class="statusformexp" method="POST" style="margin: 0%" action="{{ route('expense.status', $expense->id) }}">
                                                                         @csrf
                                                                         <input type="hidden" class="status"  name="status" value="paid">
                                                                         <button class="dropdown-item" type="submit">Paid</button>
                                                                     </form>
                                                                 @else
-                                                                    <form class="statusformexp" style="margin: 0%"   data-expense-id="{{ $expense->id }}">
+                                                                    <form class="statusformexp" method="POST" style="margin: 0%"   action="{{ route('expense.status', $expense->id) }}">
                                                                         @csrf
                                                                         <input type="hidden" class="status" name="status" value="unpaid">
                                                                         <button class="dropdown-item" type="submit">Unpaid</button>
@@ -104,26 +104,26 @@
 
 <script>
 
-    $(document).ready(function(){
-        $('.statusformexp').on('submit', function(e) {
-            e.preventDefault();
-            var status_change = $(this).find('.status').val();
-            var expense_id = $(this).data('expense-id');
-            var form = $(this);
-            $.ajax({
-                method: "POST",
-                url: "{{ route('expense.status', ['id' => ':expense_id']) }}".replace(':expense_id', expense_id),
-                data: form.serialize(),
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
+    // $(document).ready(function(){
+    //     $('.statusformexp').on('submit', function(e) {
+    //         e.preventDefault();
+    //         var status_change = $(this).find('.status').val();
+    //         var expense_id = $(this).data('expense-id');
+    //         var form = $(this);
+    //         $.ajax({
+    //             method: "POST",
+    //             url: "".replace(':expense_id', expense_id),
+    //             data: form.serialize(),
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             },
+    //             success: function(response) {
 
-                    swal("", response.status, "success");
-                }
-            });
-        });
-    });
+    //                 swal("", response.status, "success");
+    //             }
+    //         });
+    //     });
+    // });
 
 
 

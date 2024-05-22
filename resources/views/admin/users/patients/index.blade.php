@@ -5,7 +5,7 @@
         <h4 class="f-w-700">Patient Management</h4>
         <nav>
             <ol class="breadcrumb justify-content-sm-start align-items-center mb-0">
-                <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"> </i></a></li>
+                <li class="breadcrumb-item"><a href="{{route('admin.dash')}}"> <i data-feather="home"> </i></a></li>
                 <li class="breadcrumb-item f-w-400">Dashboard</li>
                 <li class="breadcrumb-item f-w-400 active">Patient</li>
             </ol>
@@ -42,7 +42,7 @@
                                         <th>City</th>
                                         <th>Phone number</th>
                                         <th>Date Naissance</th>
-                                        <th>status</th>
+                                        {{-- <th>status</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -60,7 +60,7 @@
                                             <td>{{$patient->city->nom_city}}</td>
                                             <td>{{$patient->phone_number}}</td>
                                             <td>{{$patient->date_naissance}}</td>
-                                            <td><span class="{{$patient->isActive === "1" ? "badge text-bg-success" :"badge text-bg-danger"}}">{{$patient->isActive === "1" ? "Active" :"Disable"}}</span></td>
+                                            {{-- <td><span class="{{$patient->isActive === "1" ? "badge text-bg-success" :"badge text-bg-danger"}}">{{$patient->isActive === "1" ? "Active" :"Disable"}}</span></td> --}}
                                             <td>
                                                 <ul class="action">
                                                     <li class="edit "> <a href="{{route('patient.edit',$patient->id)}}"><i class="icon-pencil-alt"></i></a></li>
@@ -68,7 +68,7 @@
 
                                                         <a href="{{route('patient.destroy',$patient->id)}}" onclick="confirm(event)"><i class="icon-trash"></i></a>
                                                     </li>
-                                                    <li class="m-l-10">
+                                                    {{-- <li class="m-l-10">
                                                         <span class="dropdown">
                                                             <a aria-expanded="false" aria-haspopup="true" class="border-0 " data-bs-toggle="dropdown" id="dropdownMenuButton" type="button"><i class="fa fa-ellipsis-v text-black"></i></a>
                                                             <div  class="dropdown-menu tx-13">
@@ -87,7 +87,7 @@
                                                             @endif
                                                             </div>
                                                         </span>
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
                                             </td>
                                         </tr>

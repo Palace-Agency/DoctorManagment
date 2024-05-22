@@ -18,12 +18,12 @@
     map.addLayer(validatorsLayer);
   }
   document.getElementById("weathermap").innerHTML =
-    "<div id='map' style='width: 100%; height: 100%;'></div>";
-  var DATE_FORMAT = "dd.mm.yy";
-  var strToDateUTC = function (str) {
-    var date = $.datepicker.parseDate(DATE_FORMAT, str);
-    return new Date(date - date.getTimezoneOffset() * 60 * 1000);
-  };
+    "<div id='map' style='width: 100%; height: 60%;'></div>";
+    var DATE_FORMAT = "dd.mm.yy";
+    var strToDateUTC = function (str) {
+        var date = $.datepicker.parseDate(DATE_FORMAT, str);
+        return new Date(date - date.getTimezoneOffset() * 60 * 1000);
+    };
 
   var map = L.map("map2").setView([60, 50], 3);
 

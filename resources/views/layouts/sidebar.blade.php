@@ -13,7 +13,7 @@
                 </svg>
             </div> --}}
         </div>
-        <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid" 
+        <div class="logo-icon-wrapper"><a href="index.html"><img class="img-fluid"
                     src="{{ asset('assets/images/logo/logo-icon.png') }}" alt=""></a></div>
         <nav class="sidebar-main">
             <div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
@@ -37,7 +37,7 @@
 
                         <li class="sidebar-list">
                             <i class="fa fa-thumb-tack"></i>
-                            <a class="sidebar-link sidebar-title link-nav" href="#">
+                            <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.dash')}}">
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg>

@@ -5,7 +5,7 @@
     <h4 class="f-w-700">Speciality Management</h4>
     <nav>
     <ol class="breadcrumb justify-content-sm-start align-items-center mb-0">
-        <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"> </i></a></li>
+        <li class="breadcrumb-item"><a href="{{route('admin.dash')}}"> <i data-feather="home"> </i></a></li>
         <li class="breadcrumb-item f-w-400">Dashboard</li>
         <li class="breadcrumb-item f-w-400"><a href="{{route('speciality.index')}}">Specialities</a></li>
         <li class="breadcrumb-item f-w-400 active">Edit</li>
