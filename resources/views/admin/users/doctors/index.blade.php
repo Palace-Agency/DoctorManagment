@@ -46,11 +46,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $id = 1; @endphp
                                     @foreach ($doctors->filter(function ($doctor) {
                                             return $doctor->hasRole('doctor');
                                         }) as $doctor)
                                         <tr>
-                                            <td>{{$doctor->id}}</td>
+                                            <td>{{$id++}}</td>
                                             <td><img src="{{asset('/images/doctor/'.$doctor->image)}}" width="80px" height="80px" alt=""></td>
                                             <td>{{$doctor->fname}}</td>
                                             <td>{{$doctor->lname}}</td>
@@ -62,7 +63,6 @@
                                                 <ul class="action">
                                                     <li class="edit "> <a href="{{route('doctor.edit',$doctor->id)}}"><i class="icon-pencil-alt"></i></a></li>
                                                     <li class="delete">
-
                                                         <a href="{{ route('doctor.destroy', $doctor->id) }}" onclick="confirm(event)"><i class="icon-trash"></i></a>
                                                     </li>
                                                     <li class="m-l-10">
@@ -82,7 +82,8 @@
                                                                         <button class="dropdown-item" type="submit">Disable</button>
                                                                     </form>
                                                                 @endif
-
+                                                                <a href="{{route('doctor.details', $doctor->id)}}" class="dropdown-item">Patients</a>
+                                                                <a href="{{route('doctor.appointments', $doctor->id)}}" class="dropdown-item">Appointments</a>
                                                             </div>
                                                         </span>
                                                     </li>

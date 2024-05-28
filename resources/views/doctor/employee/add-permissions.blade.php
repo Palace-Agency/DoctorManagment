@@ -1,18 +1,7 @@
 @section('title', __('Add or give permissions'))
-@extends('layouts.master')
+@extends('layouts_user.master')
 @section("road")
-<div class="col-4 col-xl-4 page-title">
-    <h4 class="f-w-700">Role Management</h4>
-    <nav>
-    <ol class="breadcrumb justify-content-sm-start align-items-center mb-0">
-        <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"> </i></a></li>
-        <li class="breadcrumb-item f-w-400">Dashboard</li>
-        <li class="breadcrumb-item f-w-400"><a href="{{route('role.index')}}">Roles</a></li>
-        <li class="breadcrumb-item f-w-400 active">Add or give permissions</li>
-    </ol>
-    </nav>
-</div>
-@endsection
+
 @section('content')
     <div class="container mt-3">
         <div class="row">

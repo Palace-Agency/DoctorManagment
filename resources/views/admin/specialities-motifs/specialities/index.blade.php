@@ -2,7 +2,7 @@
 @extends('layouts.master')
 @section('road')
     <div class="col-4 col-xl-4 page-title">
-        <h4 class="f-w-700">Specialies Management</h4>
+        <h4 class="f-w-700">Specialities Management</h4>
         <nav>
             <ol class="breadcrumb justify-content-sm-start align-items-center mb-0">
                 <li class="breadcrumb-item"><a href="{{route('admin.dash')}}"> <i data-feather="home"> </i></a></li>

@@ -11,7 +11,7 @@
         <div class="card mx-5 mt-5">
             <div class="card-header border-0">
                 <h4 class="d-flex justify-content-center">
-                    Search Doctor
+                    Search Doctors
                 </h4>
             </div>
             <div class="card-body">
@@ -91,13 +91,13 @@
                     </div>
                     @php
                         if($i == 6){
-                            $flag = true
-                            ; break;
+                            $flag = true ;
+                             break;
                         }
                     @endphp
                 @endforeach
                 @if($flag)
-                    <button class="btn btn-primary w-25 l-50">List of Doctors</button>
+                    <a href="{{route('alldoctors')}}" class="btn btn-primary fw-bold w-25 l-50">List of Doctors</a>
                 @endif
             </div>
         </div>

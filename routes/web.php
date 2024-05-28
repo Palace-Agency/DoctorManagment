@@ -66,7 +66,7 @@ Route::group(['middleware'=>'auth'],function(){
         Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dash');
         Route::resource('permission', PermissionController::class);
         Route::delete('/permission/{idpermission}/delete', [PermissionController::class, 'destroy'])->name('permission.destroy');
-
+        // Route::get('/appointment-doctors',)
         Route::resource('role',RoleController::class);
         Route::delete('/role/{idrole}/delete', [RoleController::class, 'destroy'])->name('role.destroy');
         Route::get("role/{idrole}/give-permissions", [RoleController::class, 'addPermissionToRole'])->name('role.givepermissions');
@@ -96,6 +96,7 @@ Route::group(['middleware'=>'auth'],function(){
             Route::get('/create','create')->name('create');
             Route::post('/store','store')->name('store');
             Route::get('/{iddoctor}/details', 'detailsDoctor')->name('details');
+            Route::get('/{iddoctor}/appointment-doc', 'appointmentDoctor')->name('appointments');
             Route::get('/{iddoctor}/destroy', 'destroy')->name('destroy');
             Route::get('/{iddoctor}/edit','edit')->name('edit');
             Route::post('/status/{iddoctor}', 'status')->name('status');
@@ -114,10 +115,22 @@ Route::group(['middleware'=>'auth'],function(){
         Route::get('/medicament',[MedicamentController::class,'index'])->name('medicament.index');
         Route::get('/medicament/create',[MedicamentController::class,'create'])->name('medicament.create');
         Route::post('/medicament/import', [MedicamentController::class, 'import'])->name('medicament.import');
+
     });
 
     Route::prefix('/doctor')->middleware('role:doctor|employee')->group(function(){
+        Route::get('/fetch-appointments-paid', [DashboardDocController::class, 'fetchTotalAppointmentsandpaid'])->name('fetchTotalAppointmentsandpaid');
+
         Route::get('/',[DashboardDocController::class,"index"])->name('cabinet.dash');
+        Route::prefix('/expenses')->controller(ExpenseController::class)->name('expense.')->group(function () {
+            Route::get('', 'index')->name('index')->middleware('doctor_or_permission:view expenses');
+            Route::get('/create', 'create')->name('create')->middleware('doctor_or_permission:create expenses');
+            Route::post('/store', 'store')->name('store')->middleware('doctor_or_permission:create expenses');
+            Route::get('/edit/{id}', 'edit')->name('edit')->middleware('doctor_or_permission:edit expenses');
+            Route::put('/update/{id}', 'update')->name('update')->middleware('doctor_or_permission:edit expenses');
+            Route::get('/delete/{id}', 'delete')->name('destroy')->middleware('doctor_or_permission:edit expenses');
+            Route::post('/status/{id}', 'status')->name('status')->middleware('doctor_or_permission:edit expenses');
+        });
         Route::prefix('/category-expenses')->controller(CategoryExpenseController::class)->name('categoryexpense.')->group(function(){
             Route::get('','index')->name('index');
             Route::get('/create','create')->name('create');
@@ -126,16 +139,7 @@ Route::group(['middleware'=>'auth'],function(){
             Route::put('/update/{id}','update')->name('update');
             Route::get('/delete/{id}','delete')->name('destroy');
         });
-        Route::prefix('/expenses')->controller(ExpenseController::class)->name('expense.')->group(function(){
-            Route::get('','index')->name('index');
-            Route::get('/create','create')->name('create');
-            Route::post('/store','store')->name('store');
-            Route::get('/edit/{id}','edit')->name('edit');
-            Route::put('/update/{id}','update')->name('update');
-            Route::get('/delete/{id}','delete')->name('destroy');
-            Route::post('/status/{id}', 'status')->name('status');
 
-        });
         // Route::prefix('/calendar')->controller()
         Route::get('/calendar',[CalendarController::class,'index'])->name('calendar');
         Route::get('/profile',[CabinetController::class,'profile'])->name("doctor.profile");
@@ -151,7 +155,7 @@ Route::group(['middleware'=>'auth'],function(){
 
         Route::post('/details/make-appointment/{idmypatient}', [MyPatientController::class, 'makeAppointment'])->name('mypatient.makeapp');
         Route::prefix('/details')->group(function(){
-            Route::get('/{idmypatient}', [MyPatientController::class, 'details'])->name('mypatient.details');
+            Route::get('/{idmypatient}', [MyPatientController::class, 'details'])->name('mypatient.details')->role('doctor');
             Route::post('/update/{idmypatient}', [MyPatientController::class, 'update'])->name('mypatient.update');
             Route::post('/observation/{idmypatient}', [MyPatientController::class, 'observation'])->name('mypatient.observation');
             Route::get('/getObser/{observationId}', [MyPatientController::class, 'getObservationId'])->name('getObser');
@@ -192,15 +196,15 @@ Route::group(['middleware'=>'auth'],function(){
         });
 
         Route::prefix('/Emplyee')->controller(EmployeeController::class)->name('employee.')->group(function(){
-            Route::get('/index', 'index')->name('index');
-            Route::get('/create','create')->name('create');
-            Route::post('/store','store')->name('store');
-            Route::post('/status/{idemployee}', 'statusChange')->name('status');
-            Route::get('/edit/{id}','edit')->name('edit');
-            Route::put('/update/{id}','update')->name('update');
-            Route::get('/delete/{id}','delete')->name('delete');
-            Route::get('/give-permission/{id}','givePermissions')->name('givepermissions');
-            Route::put('/store-permission/{idemployee}', 'givePermissionsStore')->name('storePermissions');
+            Route::get('/index', 'index')->name('index')->role('doctor');
+            Route::get('/create','create')->name('create')->role('doctor');
+            Route::post('/store','store')->name('store')->role('doctor');
+            Route::post('/status/{idemployee}', 'statusChange')->name('status')->role('doctor');
+            Route::get('/edit/{id}','edit')->name('edit')->role('doctor');
+            Route::put('/update/{id}','update')->name('update')->role('doctor');
+            Route::get('/delete/{id}','delete')->name('delete')->role('doctor');
+            Route::get('/give-permission/{id}','givePermissions')->name('givepermissions')->role('doctor');
+            Route::put('/store-permission/{idemployee}', 'givePermissionsStore')->name('storePermissions')->role('doctor');
         });
 
 

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
 
 class CabinetController extends Controller
 {
-    
+
 
     public function profile(){
         $specialities = Speciality::all();
@@ -48,7 +48,7 @@ class CabinetController extends Controller
             'experience_diplome' => 'nullable|string|min:7',
             'image' => 'nullable|image|mimes:jpeg,png,jpg',
             'head' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pictures.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pictures.*' => 'nullable|image|mimes:jpeg,png,jpg',
             'languages' => 'required|array',
             'languages.*' => 'required|string',
             'motifs' => 'required|array', // Validates that it's an array
@@ -60,7 +60,9 @@ class CabinetController extends Controller
         if ($validator->fails()) {
             return response()->json(['danger' => $validator->errors()]);
         }
-        $file_name = 'default.png';
+        // $file_name = 'default.png';
+        $file_name = "";
+
         if ($request->hasfile('image')) {
             $file = $request->file('image');
             $file_extention = $file->getClientOriginalExtension();
@@ -75,7 +77,7 @@ class CabinetController extends Controller
         $info_doc->city_id = $request->city_id;
         $info_doc->address = $request->adresse;
         $info_doc->zip_code = $request->zip_code;
-        $info_doc->image = $file_name ;
+        $info_doc->image = empty($file_name) ? $info_doc->image : 'default.png';
         $info_doc->phone_number = $request->phone;
         $info_doc->save();
 

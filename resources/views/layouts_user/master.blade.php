@@ -38,8 +38,8 @@
                             class="img-fluid for-dark" src="../assets/images/logo/logo_light.png" alt="" /></a>
                 </div>
             </div>
-            <div class="col-1 justify-content-sm-start align-items-center mt-3">
-                <img class="img-80 " style="border-radius: 30% 30% " src="{{asset('/images/doctor/'.Auth::user()->image)}}" alt="">
+            <div class="col-1 justify-content-center align-items-center mt-2 mb-2">
+                <img class="img-70 " style="border-radius: 50% 50% " src="{{asset('/images/doctor/'.Auth::user()->image)}}" alt="">
             </div>
             @role('doctor')
                 <div class="col-6 col-xl-4 page-title p-0 mt-3">
@@ -68,6 +68,13 @@
                     </nav>
                 </div>
             @endrole
+            @role('employee')
+                @php $doc = App\Models\User::role('doctor')->where('id',Auth::user()->doctor_id)->first() @endphp
+                <div class="col-6 col-xl-4 page-title p-0 mt-3">
+                    <h4 class="f-w-700">Hello Assitance {{ Auth::user()->fname . ' ' . Auth::user()->lname }}</h4>
+                        work with Dr.{{$doc->fname.' '.$doc->lname}}
+                </div>
+            @endrole
             @role('patient')
                 <div class="col-4 col-xl-4 page-title p-0 d-flex justify-content-start align-items-center">
                     <h4 class="f-w-700">Hello {{ Auth::user()->fname . ' ' . Auth::user()->lname }}</h4>
@@ -75,12 +82,12 @@
                 </div>
             @endrole
             @auth
-                <div class=" col-4 col-xl-4 d-flex justify-content-center align-items-center">
+                {{-- <div class=" col-4 col-xl-4 d-flex justify-content-center align-items-center">
                     @php
                         $date = Carbon\Carbon::now()->format('l j F Y - H:i');
                     @endphp
                     <p class="mb-0 f-w-600">{{ $date }}</p>
-                </div>
+                </div> --}}
             @endauth
             @include('layouts_user.topbar')
         </div>
@@ -89,7 +96,7 @@
             <!-- Page Sidebar Start-->
             @include('layouts_user.sidebar')
             <!-- Page Sidebar Ends-->
-            <div class="page-body">
+            <div class="page-body" style="min-height: 655px">
                 <!-- Container-fluid starts-->
                 @yield('content')
                 <!-- Container-fluid Ends-->

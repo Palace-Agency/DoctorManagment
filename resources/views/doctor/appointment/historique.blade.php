@@ -62,7 +62,7 @@
                                                     <button class="btn border-0 text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more text-black"></i></button>
                                                     <ul class="dropdown-menu dropdown-block">
                                                         <li> <a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setAppointmentId('{{ $appointment->id }}')"  data-bs-target="#exampleModalLong">view information</a></li>
-                                                    <li><a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setAppointmentId('{{ $appointment->id }}')" data-bs-target="#modifyAppointment">Modify Appointment</a></li>
+                                                    {{-- <li><a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setAppointmentId('{{ $appointment->id }}')" data-bs-target="#modifyAppointment">Modify Appointment</a></li> --}}
                                                     <li><a class="dropdown-item" href="{{route('mypatient.details',$appointment->patient_id)}}">Detail of patient</a></li>
                                                     {{-- <li><a class="dropdown-item" href="{{ route('appointment.destroy', $appointment->id) }}"onclick="confirm(event)">Delete</a> --}}
                                                     </li>
@@ -260,7 +260,7 @@
 
             $('#informations').val(response[0].medical_information).text(response[0].medical_information);
 
-            
+
             let html = "";
             $('#resons').empty();
             let spec = null;// Clear previous content before populating again

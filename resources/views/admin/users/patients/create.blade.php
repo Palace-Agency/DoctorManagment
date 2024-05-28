@@ -136,33 +136,6 @@
                                             </span>
                                     @enderror
                                 </div>
-                                <div class="col-md-12 mt-2">
-                                    <label class="col-form-label">Password <span class="text-danger">*</span></label>
-                                    <div class="form-input position-relative">
-                                        <input placeholder="password" id="passwordInput"  type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
-
-                                        @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    <input type="checkbox" class="mt-2" id="showPasswordCheckbox"> Show Password
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-2">
-                                    <label class="col-form-label">Confirmer Password <span class="text-danger">*</span></label>
-                                    <div class="form-input position-relative">
-                                            <input id="password-confirm" id="passwordInput2"  type="password" placeholder="Confirmer password" class="form-control" name="password_confirmation" autocomplete="new-password">
-                                            {{-- <input type="checkbox" class="mt-2" id="showPasswordCheckbox2"> Show Password --}}
-
-                                        @error('password_confirmation')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    {{-- <div class="show-hide"><span class="show"></span></div> --}}
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group mb-0 mt-3">
                                 <button class="btn btn-primary btn-block w-100" type="submit">Create Account</button>

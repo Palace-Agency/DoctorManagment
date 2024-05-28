@@ -95,7 +95,7 @@ class HomeController extends Controller
                 foreach ($parametres as $param) {
                     $serializedSpecialities = $param->speciality_id;
                     $selectedSpecialities = unserialize($serializedSpecialities);
-                    $doctorfind = User::find($param->doctor_id);
+                    $doctorfind = User::role('doctor')->find($param->doctor_id);
 
                     if ($doctorfind && in_array($speciality->id, $selectedSpecialities) && $doctorfind->city->nom_city == $request->city) {
                         $doctors[] = $doctorfind;

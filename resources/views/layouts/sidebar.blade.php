@@ -37,7 +37,7 @@
 
                         <li class="sidebar-list">
                             <i class="fa fa-thumb-tack"></i>
-                            <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.dash')}}">
+                            <a class="sidebar-link sidebar-title link-nav {{ in_array(Route::currentRouteName(), ['admin.dash']) ? 'border-l-primary border-6' : '' }}" href="{{route('admin.dash')}}">
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                 </svg>
@@ -48,7 +48,7 @@
                         </li>
 
                         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i><a
-                                class="sidebar-link sidebar-title link-nav" href="{{ route('permission.index') }}">
+                                class="sidebar-link sidebar-title link-nav {{ in_array(Route::currentRouteName(), ['permission.index']) ? 'border-l-primary border-6' : '' }}" href="{{ route('permission.index') }}">
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
                                 </svg>
@@ -59,7 +59,7 @@
 
 
                         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
-                            <a class="sidebar-link sidebar-title link-nav" href="{{ route('role.index') }}">
+                            <a class="sidebar-link sidebar-title link-nav {{ in_array(Route::currentRouteName(), ['role.index','role.givepermissions']) ? 'border-l-primary border-6' : '' }}" href="{{ route('role.index') }}">
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
                                 </svg>
@@ -69,13 +69,11 @@
                             </a>
                         </li>
                         <li class="sidebar-list"><i class="fa fa-thumb-tack"></i>
-                            <a class="sidebar-link sidebar-title link-nav" href="{{route('medicament.index')}}">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
-                                </svg>
+                            <a class="sidebar-link sidebar-title link-nav {{ in_array(Route::currentRouteName(), ['medicament.index','medicament.create']) ? 'border-l-primary border-6' : '' }}" href="{{route('medicament.index')}}">
+                                <i class="fa fa-medkit  f-20 text-white"></i>
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
-                                </svg><span>Medicament</span>
+                                </svg><span>Medicaments</span>
                             </a>
                         </li>
                         <li class="sidebar-list">
@@ -98,9 +96,8 @@
                         <li class="sidebar-list">
                             <i class="fa fa-thumb-tack"></i>
                             <a class="sidebar-link sidebar-title active" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{asset("assets/svg/icon-sprite.svg#stroke-ecommerce")}}"></use>
-                                </svg>
+                                                                    <i class="fa fa-users f-20 text-white"></i>
+
                                 <svg class="fill-icon">
                                     <use href="{{asset("assets/svg/icon-sprite.svg#fill-ecommerce")}}"></use>
                                 </svg>

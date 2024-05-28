@@ -16,21 +16,36 @@ use Illuminate\Support\Facades\Validator;
 class AppointmentController extends Controller
 {
     public function index(){
-        $appointments = Appointment::where('doctor_id', Auth::id())
-                      ->whereNotIn('status', ['completed', 'cancelled'])->get();
+        // if (auth()->user()->hasRole('doctor')) {
+            $appointments = Appointment::where('doctor_id', Auth::id())
+                        ->whereNotIn('status', ['completed', 'cancelled'])->get();
+        // }else if(auth()->user()->hasRole('employee')){
+        //     $appointments = Appointment::where('doctor_id', Auth::user()->doctor_id)
+        //                 ->whereNotIn('status', ['completed', 'cancelled'])->get();
+        // }
+
         return view('doctor.appointment.index',compact('appointments'));
     }
     public function historique(){
+        // if (auth()->user()->hasRole('doctor')) {
+            $appointments = Appointment::where('doctor_id', Auth::id())
+                ->whereIn('status', ['completed', 'cancelled'])->get();
+        // } else if (auth()->user()->hasRole('employee')) {
+        //     $appointments = Appointment::where('doctor_id', Auth::user()->doctor_id)
+        //         ->whereIn('status', ['completed', 'cancelled'])->get();
 
-        $appointments = Appointment::where('doctor_id', Auth::id())
-            ->whereIn('status', ['completed', 'cancelled'])->get();
+        // }
         return view('doctor.appointment.historique', compact('appointments'));
     }
 
     public function modify($appointmentId)
     {
         // $matchedSpecialties = [];
+
         $parametres = Parametre::where('doctor_id',Auth::user()->id)->first();
+        // if (auth()->user()->hasRole('employee')) {
+        //     $parametres = Parametre::where('doctor_id',Auth::user()->doctor_id)->first();
+        // }
         $serializedSpecialities = $parametres->speciality_id;
         $selectedSpecialities = unserialize($serializedSpecialities);
         $serializedmotifs = $parametres->motifs_id;
@@ -46,7 +61,6 @@ class AppointmentController extends Controller
         return response()->json([$appointmentget,$specialities,$motifs,$patient]);
     }
     public function update(Request $request){
-
 
         $appointment_get = Appointment::findOrFail($request->id_appointment);
         $appointment_get->medical_information = $request->medical_information ?? $appointment_get->medical_information;

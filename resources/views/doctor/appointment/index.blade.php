@@ -64,8 +64,10 @@
                                                     <ul class="dropdown-menu dropdown-block">
                                                         <li> <a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setAppointmentId('{{ $appointment->id }}')"  data-bs-target="#exampleModalLong">view information</a></li>
                                                     <li><a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setAppointmentId('{{ $appointment->id }}')" data-bs-target="#modifyAppointment">Modify Appointment</a></li>
-                                                    <li><a class="dropdown-item" href="{{route('mypatient.details',$appointment->patient_id)}}">Detail of patient</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('appointment.destroy', $appointment->id) }}"onclick="confirm(event)">Delete</a>
+                                                    @role('doctor')
+                                                        <li><a class="dropdown-item" href="{{route('mypatient.details',$appointment->patient_id)}}">Detail of patient</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('appointment.destroy', $appointment->id) }}"onclick="confirm(event)">Delete</a>
+                                                    @endrole
                                                     </li>
                                                     </ul>
                                                 </div>

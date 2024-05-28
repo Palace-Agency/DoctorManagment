@@ -37,7 +37,7 @@
         <!-- Page Sidebar Start-->
         @include('layouts.sidebar')
         <!-- Page Sidebar Ends-->
-        <div class="page-body">
+        <div class="page-body" style="min-height: 574px">
           <!-- Container-fluid starts-->
          @yield('content')
           <!-- Container-fluid Ends-->

@@ -9,30 +9,37 @@
     <div class="container-fluid">
         <!-- Card stats -->
         <div class="row g-6 mb-6">
-            <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card pb-2">
-                  <div class="card-header card-no-border pb-0">
-                    <div class="header-top daily-revenue-card">
-                      <h5>Paid expenses in {{$now->year}}</h5>
-                    </div>
-                  </div>
-                  <div class="card-body pb-0 total-sells">
-                    <div class="d-flex align-items-center gap-3">
-                      <div class="flex-shrink-0"><i class="icon-money f-40 text-white"></i></div>
-                      <div class="flex-grow-1">
-                        <div class="d-flex align-items-center gap-2">
-                          <h2 class="text-success">{{$expenses}} MAD<h2>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div class="col-xl-12 mb-2">
+                <form action="" >
+                    <select name="month" id="monthSelect"  class="form-control w-25 d-flex justify-content-end">
+                        <?php
+                        $months = [
+                            1 => 'January',
+                            2 => 'February',
+                            3 => 'March',
+                            4 => 'April',
+                            5 => 'May',
+                            6 => 'June',
+                            7 => 'July',
+                            8 => 'August',
+                            9 => 'September',
+                            10 => 'October',
+                            11 => 'November',
+                            12 => 'December'
+                        ];
+                        foreach ($months as $key => $month) {
+                            $selected = ($key == $now->format('m')) ? 'selected' : ''; // Check if the current month matches the iteration month
+                            echo "<option ".$selected." value='$key'>$month</option>";
+                        }
+                        ?>
+                    </select>
+                </form>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-4 col-sm-6 col-12">
                 <div class="card pb-2">
                   <div class="card-header card-no-border pb-0">
                     <div class="header-top daily-revenue-card">
-                      <h5>Total appointment in {{$now->format('M')}}</h5>
+                      <h5>Total appointment in <span class="monthName">{{$now->format('M')}}</span> </h5>
                     </div>
                   </div>
                   <div class="card-body pb-0 total-sells">
@@ -40,33 +47,14 @@
                       <div class="flex-shrink-0"><i class="fa fa-calendar f-40 text-white"></i></div>
                       <div class="flex-grow-1">
                         <div class="d-flex align-items-center gap-2">
-                          <h2>{{$totalapp->count()}}</h2>
+                          <h2 class="totalapp">{{$totalapp}}</h2>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card pb-2">
-                  <div class="card-header card-no-border pb-0">
-                    <div class="header-top daily-revenue-card">
-                      <h5>Employees</h5>
-                    </div>
-                  </div>
-                  <div class="card-body pb-0 total-sells">
-                    <div class="d-flex align-items-center gap-3">
-                     <div class="flex-shrink-0"><i class="fa fa-user-md f-40 text-white"></i></div>
-                      <div class="flex-grow-1">
-                        <div class="d-flex align-items-center gap-2">
-                          <h2>{{$employees->count()}}</h2>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 col-12">
+            <div class="col-xl-4 col-sm-6 col-12">
                 <div class="card pb-2">
                   <div class="card-header card-no-border pb-0">
                     <div class="header-top daily-revenue-card">
@@ -85,13 +73,32 @@
                   </div>
                 </div>
             </div>
+            <div class="col-xl-4 col-sm-6 col-12">
+                <div class="card pb-2">
+                  <div class="card-header card-no-border pb-0">
+                    <div class="header-top daily-revenue-card">
+                      <h5>Total Paid consultations in <span class="monthName">{{$now->format('M')}}</span> </h5>
+                    </div>
+                  </div>
+                  <div class="card-body pb-0 total-sells">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="flex-shrink-0"><i class="icon-money f-40 text-white"></i></div>
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-items-center gap-2">
+                          <h2 class="text-success"><span class="paidtotal">{{Auth::user()->parametre->tarif_consult * $appointmentcount}}</span> MAD<h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
         <div class="row row-sm mt-4">
             <div class="col-sm-12 col-lg-12 col-xl-12">
                 <div class="card custom-card overflow-hidden">
                     <div class="card-header border-bottom-0">
                         <div>
-                            <h2 class="main-content-label mb-2">Expenses for {{ $now->year }} </h2>
+                            <h3 class="main-content-label mb-2">Patients and appointments informations in {{ $now->year }} </h3>
                             {{-- <span class="d-block tx-12 mb-0 text-muted">Expes</span> --}}
                         </div>
                     </div>
@@ -121,6 +128,7 @@
                                     <table class="table card-table table-vcenter  text-nowrap mb-0 ">
                                         <thead class="sticky-top bg-white">
                                             <th>Order by </th>
+                                            <th>Type of appointment</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>time start</th>
@@ -131,11 +139,14 @@
                                             @foreach ($appointments as $appointment)
                                                 <tr>
                                                     <td>{{$i++}}</td>
+                                                    <td class="text-capitalize fw-bold">
+                                                        {{$appointment->type_appointment}}
+                                                    </td>
                                                     <td>{{$appointment->patient->fname}}</td>
                                                     <td>{{$appointment->patient->lname}}</td>
                                                     <td>{{ \Carbon\Carbon::parse($appointment->start_at)->format('H:i') }}</td>
-
-                                                    <td><span class="@if($appointment->status == 'pending')
+                                                    <td>
+                                                        <span class="@if($appointment->status == 'pending')
                                                                         badge text-bg-warning
                                                                     @elseif($appointment->status == 'inprogress')
                                                                         badge text-bg-primary badge-small
@@ -147,8 +158,9 @@
                                                                         badge text-bg-danger
                                                                     @endif
                                                                     ">
-                                                            <strong class="text-light text-capitalize">{{$appointment->status}}</strong></span></td>
-                                                    <td>
+                                                            <strong class="text-light text-capitalize">{{$appointment->status}}</strong>
+                                                        </span>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -164,53 +176,83 @@
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var expensesChart = new Chart(ctx, {
-                type: 'doughnut', // Doughnut chart
-                data: {
-                    labels: ['Paid Expenses', 'Unpaid Expenses'],
-                    datasets: [{
-                        label: 'Expenses',
-                        data: [{{ $expensespaid }}, {{ $expensesunpaid }}],
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 0.2)',  // Color for paid expenses
-                            'rgba(239, 9, 9, 0.2)'   // Color for unpaid expenses
-                        ],
-                        borderColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(239, 9, 9, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // Allows resizing of the chart
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += new Intl.NumberFormat('en-US', {
-                                            style: 'currency',
-                                            currency: 'MAD' // Using Moroccan Dirham
-                                        }).format(context.parsed);
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
+        var chartcancelled = @json($appointmentcancelled);
+        var chartcompleted = @json($appointmentcompleted);
+        var patient = @json($patientcount);
+        const ctx = document.getElementById('myChart');
+        // console.log(refsale);
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Appointments Completed',
+                        data: chartcompleted,
+                        backgroundColor: "transparent",
+                        borderColor: 'green',
+                        pointBackgroundColor: "#ffffff",
+                        pointRadius: 0,
+                        borderWidth: 1,
+                        tension: 0.4, // Add this line for rounded lines
+                    },
+                    {
+                        label: 'Appointments Cancelled',
+                        data: chartcancelled,
+                        backgroundColor: "transparent",
+                        borderColor: 'red',
+                        pointBackgroundColor: "#ffffff",
+                        pointRadius: 0,
+                        borderWidth: 1,
+                        tension: 0.4, // Add this line for rounded lines
+                    },
+                    {
+                        label: 'Patients',
+                        data: patient,
+                        backgroundColor: "transparent",
+                        borderColor: 'blue',
+                        pointBackgroundColor: "#ffffff",
+                        pointRadius: 0,
+                        borderWidth: 1,
+                        tension: 0.4, // Add this line for rounded lines
                     }
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                tooltips: {
+                    mode: "nearest",
+                    intersect: false,
+                }
+
+            }
+        });
+        document.getElementById("monthSelect").addEventListener("change", function() {
+            var select = document.getElementById("monthSelect");
+            var selectedMonthValue = select.value; // Get the value (number) of the selected month
+            var selectedMonthName = select.options[select.selectedIndex].text; // Get the name (text) of the selected month
+            fetchTotalAppointmentsandpaid(selectedMonthValue, selectedMonthName);
+        });
+        function fetchTotalAppointmentsandpaid(selectedMonthValue, selectedMonthName){
+            var total = {{Auth::user()->parametre->tarif_consult}};
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('fetchTotalAppointmentsandpaid') }}',
+                data: {
+                    month: selectedMonthValue
+                },
+                success: function(response) {
+                    $('.monthName').empty();
+                    $('.monthName').html(selectedMonthName)
+                    $('.totalapp').html(response[1]);
+                    $('.paidtotal').html(total * response[0])
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    console.error('Error fetching appointments:', error);
                 }
             });
-        });
+        }
     </script>
 @endsection

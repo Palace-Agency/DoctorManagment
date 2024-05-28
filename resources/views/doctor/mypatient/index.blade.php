@@ -11,7 +11,8 @@
             <div class="card-header border-0">
                 <h4>
                     <i class="icofont icofont-users-alt-1"></i>&nbsp;Patients
-                    <a href="{{route('mypatient.create')}}" class="float-end"><i class="fa icon-plus"></i>&nbsp;&nbsp;New Patient</a>
+                    <a href="{{ route('mypatient.create') }}" class="float-end btn btn-primary"><i class="fa icon-plus"></i>&nbsp;&nbsp;New Patient</a>
+
                 </h4>
             </div>
             <div class="card-body">

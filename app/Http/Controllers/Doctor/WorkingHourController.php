@@ -126,7 +126,7 @@ class WorkingHourController extends Controller
                     $doctor->save();
                 }
 
-                return response()->json(["success" => "the work hours saved"]);
+                return response()->json(["success" => "the working hours saved"]);
 
             }else{
                 $duree = $request->duree;
@@ -173,6 +173,7 @@ class WorkingHourController extends Controller
     }
 
     public function vacance(Request $request){
+        // dd($request);
         //if the request is empty
         if ($request->input() === null || empty($request->input())) {
             // dd($request);
@@ -299,11 +300,20 @@ class WorkingHourController extends Controller
                 }
             }
         }
+        $vacations = Vacation::where('doctor_id', Auth::user()->id)->get();
+
+        foreach ($vacations as $vacation) {
+            if (!in_array($vacation->id, $request->vac_id)) {
+                $vacation->delete();
+            }
+        }
+
 
         if($flag == 1){
-            return response()->json(["danger" => "the ".$label." already exist"]);
-        }else{
-            return response()->json(["success" => "the holidays saved successfully"]);
+            return response()->json(["danger" => "the label : ".$label." already exist"]);
+        }
+        else{
+            return response()->json(["success" => "the vacations saved successfully"]);
         }
     }
 }

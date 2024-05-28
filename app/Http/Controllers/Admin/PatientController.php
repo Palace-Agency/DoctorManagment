@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountPatientMail;
 
 class PatientController extends Controller
 {
@@ -24,9 +26,7 @@ class PatientController extends Controller
             'gender' => 'required',
             'city_id' => 'required',
             'datenaiss' => 'required',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'email' => 'required|string|email|max:255|unique:users,email'
         ]);
         // dd($request);
 
@@ -50,11 +50,12 @@ class PatientController extends Controller
             'date_naissance' => $request->datenaiss,
             'image' => $file_name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make('password'),
         ]);
         $user->assignRole('patient');
+        Mail::to($user->email)->send(new AccountPatientMail($user));
 
-        return redirect()->route('doctor.index')->with("success", "the account is created waiting for the admin to activate the account");
+        return redirect()->route('doctor.index')->with("success", "the account is created successfully");
 
     }
 

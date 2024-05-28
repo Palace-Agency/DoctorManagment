@@ -15,7 +15,12 @@
                     <div class="card-header">
                         <h4>
                             Expenses
-                            <a href="{{ route('expense.create') }}" class="btn btn-primary float-end">Add expenses</a>
+                            @if(auth()->user()->can('create expenses'))
+                                <a href="{{ route('expense.create') }}" class="btn btn-primary float-end">Add expenses</a>
+                                @endif
+                            @role('doctor')
+                                <a href="{{ route('expense.create') }}" class="btn btn-primary float-end">Add expenses</a>
+                            @endrole
                         </h4>
                     </div>
                     <div class="card-body">
@@ -29,7 +34,8 @@
                                         <th><span>Category Expense</span></th>
                                         <th><span>status</span></th>
                                         <th><span>amount</span></th>
-                                        <th>Action</th>
+                                        <th><span>Action</span></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,41 +54,81 @@
                                             <td class="text-success"><strong>{{ $expense->amount }} DH</strong></td>
 
                                             <td>
-                                                <ul class="action">
-                                                    <li class="edit "> <a
-                                                            href="{{ route('expense.edit', $expense->id) }}"><i
-                                                                class="icon-pencil-alt"></i></a></li>
-                                                    <li class="delete">
+                                                @if(auth()->user()->can('edit expenses'))
+                                                    <ul class="action">
 
-                                                        <a href="{{ route('expense.destroy', $expense->id) }}"
-                                                            onclick="confirm(event)"><i class="icon-trash"></i></a>
-                                                    </li>
-                                                    <li class="m-l-10">
-                                                        <span class="dropdown">
-                                                            <a aria-expanded="false" aria-haspopup="true" class="border-0 "
-                                                                data-bs-toggle="dropdown" id="dropdownMenuButton"
-                                                                type="button"><i
-                                                                    class="fa fa-ellipsis-v text-black"></i></a>
-                                                            <div class="dropdown-menu tx-13">
-                                                                @if ($expense->status != 'paid')
-                                                                    <form class="statusformexp" method="POST" style="margin: 0%" action="{{ route('expense.status', $expense->id) }}">
-                                                                        @csrf
-                                                                        <input type="hidden" class="status"  name="status" value="paid">
-                                                                        <button class="dropdown-item" type="submit">Paid</button>
-                                                                    </form>
-                                                                @else
-                                                                    <form class="statusformexp" method="POST" style="margin: 0%"   action="{{ route('expense.status', $expense->id) }}">
-                                                                        @csrf
-                                                                        <input type="hidden" class="status" name="status" value="unpaid">
-                                                                        <button class="dropdown-item" type="submit">Unpaid</button>
-                                                                    </form>
-                                                                @endif
+                                                        <li class="edit "> <a
+                                                                href="{{ route('expense.edit', $expense->id) }}"><i
+                                                                    class="icon-pencil-alt"></i></a></li>
+                                                        <li class="delete">
+
+                                                            <a href="{{ route('expense.destroy', $expense->id) }}"
+                                                                onclick="confirm(event)"><i class="icon-trash"></i></a>
+                                                        </li>
+                                                        <li class="m-l-10">
+                                                            <span class="dropdown">
+                                                                <a aria-expanded="false" aria-haspopup="true" class="border-0 "
+                                                                    data-bs-toggle="dropdown" id="dropdownMenuButton"
+                                                                    type="button"><i
+                                                                        class="fa fa-ellipsis-v text-black"></i></a>
+                                                                <div class="dropdown-menu tx-13">
+                                                                    @if ($expense->status != 'paid')
+                                                                        <form class="statusformexp" method="POST" style="margin: 0%" action="{{ route('expense.status', $expense->id) }}">
+                                                                            @csrf
+                                                                            <input type="hidden" class="status"  name="status" value="paid">
+                                                                            <button class="dropdown-item" type="submit">Paid</button>
+                                                                        </form>
+                                                                    @else
+                                                                        <form class="statusformexp" method="POST" style="margin: 0%"   action="{{ route('expense.status', $expense->id) }}">
+                                                                            @csrf
+                                                                            <input type="hidden" class="status" name="status" value="unpaid">
+                                                                            <button class="dropdown-item" type="submit">Unpaid</button>
+                                                                        </form>
+                                                                    @endif
 
 
-                                                            </div>
-                                                        </span>
-                                                    </li>
-                                                </ul>
+                                                                </div>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                                @role('doctor')
+                                                    <ul class="action">
+                                                        <li class="edit "> <a
+                                                                href="{{ route('expense.edit', $expense->id) }}"><i
+                                                                    class="icon-pencil-alt"></i></a></li>
+                                                        <li class="delete">
+
+                                                            <a href="{{ route('expense.destroy', $expense->id) }}"
+                                                                onclick="confirm(event)"><i class="icon-trash"></i></a>
+                                                        </li>
+                                                        <li class="m-l-10">
+                                                            <span class="dropdown">
+                                                                <a aria-expanded="false" aria-haspopup="true" class="border-0 "
+                                                                    data-bs-toggle="dropdown" id="dropdownMenuButton"
+                                                                    type="button"><i
+                                                                        class="fa fa-ellipsis-v text-black"></i></a>
+                                                                <div class="dropdown-menu tx-13">
+                                                                    @if ($expense->status != 'paid')
+                                                                        <form class="statusformexp" method="POST" style="margin: 0%" action="{{ route('expense.status', $expense->id) }}">
+                                                                            @csrf
+                                                                            <input type="hidden" class="status"  name="status" value="paid">
+                                                                            <button class="dropdown-item" type="submit">Paid</button>
+                                                                        </form>
+                                                                    @else
+                                                                        <form class="statusformexp" method="POST" style="margin: 0%"   action="{{ route('expense.status', $expense->id) }}">
+                                                                            @csrf
+                                                                            <input type="hidden" class="status" name="status" value="unpaid">
+                                                                            <button class="dropdown-item" type="submit">Unpaid</button>
+                                                                        </form>
+                                                                    @endif
+
+
+                                                                </div>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                @endrole
                                             </td>
 
                                         </tr>

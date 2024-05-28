@@ -15,7 +15,7 @@
                 <input type="hidden" name="idDoc" value="{{$id}}">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Continue Login Dc. {{$parametre->doctor->fname}}</h3>
+                        <h3>Continue registration Dc. {{$parametre->doctor->fname}}</h3>
                     </div>
                     <div class="col-md-12 mt-2">
                         <label class="form-label" for="validationTooltip04">Motifs <span class="text-danger">*</span></label>

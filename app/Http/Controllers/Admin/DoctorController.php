@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Motif;
 use App\Models\Parametre;
 use App\Models\Speciality;
@@ -163,7 +164,16 @@ class DoctorController extends Controller
 
         $param->delete();
         return redirect()->route('doctor.index')->with('success', 'the Doctor has been deleted successfuly');
+    }
 
-
+    public function detailsDoctor($iddoctor){
+        $patients = User::role('patient')->where('doctor_id',$iddoctor)->get();
+        $doctor = User::role('doctor')->where('id',$iddoctor)->first();
+        return view('admin.users.doctors.details',compact('patients', 'doctor'));
+    }
+    public function appointmentDoctor($iddoctor){
+        $doctor = User::role('doctor')->where('id',$iddoctor)->first();
+        $appointments = Appointment::with('patient')->where('doctor_id',$iddoctor)->get();
+        return view('admin.users.doctors.appointments',compact('appointments','doctor'));
     }
 }

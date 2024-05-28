@@ -40,9 +40,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $id = 1 @endphp
                                     @foreach ($permissions as $permission)
                                         <tr>
-                                            <td>{{$permission->id}}</td>
+                                            <td>{{$id++}}</td>
                                             <td>{{$permission->name}}</td>
                                             <td>
                                                 <ul class="action">

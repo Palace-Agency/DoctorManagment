@@ -8,8 +8,8 @@
             <div class="card-header border-0">
                 <h4>
                     <i class="fa fa-calendar"></i>&nbsp;Agenda
-                    <a href="{{ route('bussinss.days') }}" class="float-end"><i class="icon-timer"></i>&nbsp;&nbsp;Working
-                        Houres</a>
+                    <a href="{{ route('bussinss.days') }}" class="float-end btn btn-primary"><i class="icon-timer"></i>&nbsp;&nbsp;Working
+                        Hours</a>
                 </h4>
             </div>
             <div class="modal fade" id="event_entry_modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"

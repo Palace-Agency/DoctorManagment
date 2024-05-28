@@ -88,7 +88,7 @@
             <form class="theme-form" method="POST" action="{{ route('register') }}">
                 @csrf
                 <h4>Create your account</h4>
-                <p>Enter your personal details to create account</p>
+                <p>Enter your personal details to create account </p>
                 <div class="form-group">
                     <label class="col-form-label pt-0">Your Name <span class="text-danger">*</span></label>
                     <div class="row g-2">
@@ -205,18 +205,18 @@
                     </div>
                 </div>
                 <div class="form-group mb-0">
-                    <div class="checkbox p-0">
-                    <input id="checkbox1" type="checkbox">
-                    <label class="text-muted" for="checkbox1">Agree with<a class="ms-2" href="#">Privacy Policy</a></label>
-                    </div>
+                    {{-- <div class="checkbox p-0">
+                        <input id="checkbox1" type="checkbox">
+                        <label class="text-muted" for="checkbox1">Agree with<a class="ms-2" href="#">Privacy Policy</a></label>
+                    </div> --}}
                     <button class="btn btn-primary btn-block w-100" type="submit">Create Account</button>
                 </div>
-                <h6 class="text-muted mt-4 or">Or signup with</h6>
+                {{-- <h6 class="text-muted mt-4 or">Or signup with</h6>
                 <div class="social mt-4 ">
                     <div class="btn-showcase "><a class="btn btn-light btn-block w-100" href="https://www.linkedin.com/login" target="_blank"><i class="icon-google"></i> Google </a></div>
-                </div>
+                </div> --}}
                 @if (Route::has('login'))
-                    <p class="mt-4 mb-0">Already have an account?<a class="ms-2" href="{{ route('login') }}">Sign in</a></p>
+                    <p class="mt-4 mb-0">Already have an account?<a class="ms-2" href="{{ route('login') }}">Login</a></p>
                 @endif
 
             </form>

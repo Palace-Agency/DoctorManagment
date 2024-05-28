@@ -42,14 +42,16 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // if ($user->isActive != '1') {
-        //     Auth::logout();
-        //     return redirect()->route('login')->with('danger', 'Your account is not activated.');
-        // }
+
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dash')->with('success', 'Welcome to the dashboard');
         } elseif($user->hasRole('doctor')) {
-            return redirect()->route('cabinet.dash')->with('success', 'Logged in successfully');
+            if ($user->isValideEmail == '0') {
+                Auth::logout();
+                return redirect()->route('login')->with('danger', 'Continue registration.');
+            }else{
+                return redirect()->route('cabinet.dash')->with('success', 'Logged in successfully');
+            }
         }elseif($user->hasRole('patient')){
             return redirect()->route('client.index')->with('success', 'Logged in successfully');
         }elseif($user->hasRole('employee')){

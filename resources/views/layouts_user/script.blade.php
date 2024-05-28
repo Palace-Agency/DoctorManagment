@@ -19,9 +19,7 @@
 <script src="{{asset('assets/js/slick/slick.min.js')}}"></script>
 <script src="{{asset('assets/js/slick/slick.js')}}"></script>
 <script src="{{asset('assets/js/header-slick.js')}}"></script>
-<script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
-<script src="{{asset('assets/js/chart/apex-chart/stock-prices.js')}}"></script>
-<script src="{{asset('assets/js/chart/apex-chart/moment.min.js')}}"></script>
+
 {{-- <script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script> --}}
 <!-- calendar js-->
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
@@ -42,7 +40,7 @@
 
 <!-- Theme js-->
 <script src="{{asset('assets/js/script.js')}}"></script>
-<script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>
+{{-- <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script> --}}
 <!-- Plugin used-->
 {{-- <script>new WOW().init();</script> --}}
 
@@ -115,6 +113,8 @@
 <script src="{{asset('assets/js/form-wizard/form-wizard.js')}}"></script>
 <script src="{{asset('assets/js/form-wizard/image-upload.js')}}"></script>
 
+  <script src="{{asset('assets/js/chart/chartjs/chart.min.js')}}"></script>
+    <script src="{{asset('assets/js/chart/chartjs/chart.custom.js')}}"></script>
 
 
 @yield('script')

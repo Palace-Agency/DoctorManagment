@@ -1,4 +1,4 @@
-@section('title','Profile')
+@section('title','Profil')
 @extends('layouts_user.master')
 @section('links')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header border-0">
                 <h4>
-                    <i class="icon-user"></i>&nbsp;Profile
+                    <i class="icon-user"></i>&nbsp;Profil
                 </h4>
             </div>
             <div class="card-body">
@@ -107,7 +107,7 @@
                             @enderror
                         </div>
                         <div class="col-md-4 mt-2">
-                            <label class="form-label">Average price consultation rate</label>
+                            <label class="form-label">Average price consultation</label>
                             <input class="form-control @error('tarif_consult') is-invalid @enderror" name="tarif_consult" value="{{$parametres->tarif_consult}}" type="text" placeholder="Average price consultation rate">
                             @error('tarif_consult')
                                 <span class="invalid-feedback" role="alert">

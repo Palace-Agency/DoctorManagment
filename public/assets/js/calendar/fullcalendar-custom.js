@@ -43,7 +43,6 @@
             selectable: true,
             nowIndicator: true,
             events: events, // Here you include the events array
-
             dateClick: function (info) {
                 // Get the clicked date
                 var clickedDate = new Date(info.date);

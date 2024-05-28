@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-header border-0">
                 <h4>
-                    <i class="fa fa-calendar"></i>&nbsp;Working Houres
+                    <i class="fa fa-calendar"></i>&nbsp;Working Hours
                 </h4>
             </div>
             <div class="card-body">
@@ -21,7 +21,7 @@
                         <div class="card-header border-0">
                             <h4>Appointment duration</h4>
                             <p class="f-m-light mt-1">
-                                Kindly specify the duration of the appointment that works for you.</p>
+                                Specify the duration of the appointment that works for you.</p>
                         </div>
                         <div class="card-body">
                             <div class="main">
@@ -195,11 +195,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-2 mt-2 check_mon" style="{{ isset($workingdays['monday'][1]) ?  '': 'display: none;' }}">
+                                    <div class="col-md-2 mt-2 check_mon" style="{{ isset($workingdays['monday'][1]) ?  'display: none;' : ''  }}">
                                         @if (isset($workingdays['monday'][1]))
-                                        <span class="add-icon"><i class="icon-plus"></i></span>
-                                        @else
                                         <span class="add-icon"><i class="icon-minus"></i></span>
+                                        @else
+                                        <span class="add-icon"><i class="icon-plus"></i></span>
                                         @endif
                                     </div>
                                 </div>
@@ -636,7 +636,6 @@
                                     @csrf
                                     <div class="row mt-3" id="therow">
                                         @foreach ($holidays as $item)
-                                            <input type="hidden" name="vac_id[]" value="{{ $item->id }}">
                                             <div class="col-lg-6">
                                                 <div class="row">
                                                     <div class="col-md-11">
@@ -647,6 +646,8 @@
                                                     <div class="col-md-1">
                                                         <a class="removeholiday"><i
                                                                 class="icofont icofont-ui-close"></i></a>
+                                                        <input type="hidden" name="vac_id[]" class="vac-id"  value="{{ $item->id }}">
+
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label class="col-sm-6">Date start</label>
@@ -764,6 +765,7 @@
             $('#holiday').on('click', '.removeholiday', function(e) {
                 e.preventDefault();
                 $(this).closest('.col-lg-6').remove();
+
             });
 
             // Add click event listener to the add icons

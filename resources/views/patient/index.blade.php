@@ -109,7 +109,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-12 mt-2">
+                        <div class="col-md-6 mt-2">
                                     <label class="col-form-label">Password <span class="text-danger">*</span></label>
                                     <div class="form-input position-relative">
                                         <input placeholder="password" id="passwordInput"  type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
@@ -121,7 +121,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12 mt-2">
+                                <div class="col-md-6 mt-2">
                                     <label class="col-form-label">Confirmer Password <span class="text-danger">*</span></label>
                                     <div class="form-input position-relative">
                                             <input id="password-confirm" id="passwordInput2"  type="password" placeholder="Confirmer password" class="form-control" name="password_confirmation" autocomplete="new-password">
@@ -133,7 +133,6 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <input type="checkbox" class="mt-2" id="showPasswordCheckbox"> Show Password
                                 </div>
 
                     </div>

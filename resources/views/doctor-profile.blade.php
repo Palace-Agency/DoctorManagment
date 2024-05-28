@@ -4,7 +4,7 @@
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
      crossorigin=""/>
      <style>
-        #map { height: 300px; }
+        #map { height: 350px; }
      </style>
 @endsection
 @section('content')
@@ -35,46 +35,46 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <button class="btn btn-success float-end" id="test" type="button" data-bs-toggle="modal" @if(Auth::check())  data-bs-target=".makeAppontment" @endif>Make appointments</button>
+                                            <button class="btn btn-success float-end" id="test" type="button" data-bs-toggle="modal" @if(Auth::check())  data-bs-target=".makeAppontment" @else onclick="errorMsg()" @endif>Book an appointment</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4 m-3">
-                                <h3 class="m-3">About</h3>
-                                <div><i class="fa fa-user"></i> <span class="fw-bold">Full Name :
+                                <h3 class="m-3">About : </h3>
+                                <div><i class="fa fa-user"></i>&nbsp; <span class="fw-bold">Full Name :
                                     </span>{{ $doctor->fname . ' ' . $doctor->lname }}</div>
-                                <div><i class="fa fa-flag"></i><span class="fw-bold"> City : </span>{{ $doctor->city->nom_city }}</div>
-                                <div><i class="fa fa-check"></i><span class="fw-bold"> Code Postal : </span>{{ $doctor->zip_code }}</div>
-                                <div><i class="fa fa-map-marker"></i><span class="fw-bold"> Adresse : </span>{{ $doctor->address }}</div>
+                                <div><i class="fa fa-flag"></i>&nbsp;<span class="fw-bold"> City : </span>{{ $doctor->city->nom_city }}</div>
+                                <div><i class="fa fa-check"></i>&nbsp;<span class="fw-bold"> Code Postal : </span>{{ $doctor->zip_code }}</div>
+                                <div><i class="fa fa-map-marker">&nbsp;</i><span class="fw-bold"> Adresse : </span>{{ $doctor->address }}</div>
 
-                                <h3 class="m-3">Contact</h3>
-                                <div><i class="fa fa-phone"></i><span class="fw-bold"> Phone : </span>{{ $doctor->phone_number }}</div>
-                                <div><i class="fa fa-envelope"></i><span class="fw-bold"> Email : </span>{{ $doctor->email }}</div>
+                                <h3 class="m-3">Contact : </h3>
+                                <div class=""><i class="fa fa-phone"></i>&nbsp;<span class="fw-bold"> Phone : </span>{{ $doctor->phone_number }}</div>
+                                <div><i class="fa fa-envelope"></i>&nbsp;<span class="fw-bold"> Email : </span>{{ $doctor->email }}</div>
                             </div>
                             <div class="col-md-7 m-3">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h3 class="m-3">Specialities</h3>
+                                        <h3 class="m-3">Specialities : </h3>
                                         @foreach ($specialities as $speciality)
                                             <div class="badge text-bg-primary">{{$speciality->name_sp}}</div>
                                         @endforeach
                                     </div>
                                     <div class="col-md-6">
-                                        <h3 class="m-3">Language spoken</h3>
+                                        <h3 class="m-3">Languages spokens : </h3>
                                         @foreach ($selectedlanguages as $lang)
                                             <div class="badge text-bg-success">{{$lang}}</div>
                                         @endforeach
                                     </div>
                                     <div class="col-md-6">
                                         @if($parametre->bio)
-                                            <h3 class="m-3">Bio</h3>
+                                            <h3 class="m-3">Presentation of the work place : </h3>
                                             <div>{{$parametre->bio}}</div>
                                         @endif
                                     </div>
                                     <div class="col-md-6">
                                         @if($parametre->experience)
-                                            <h3 class="m-3">Experience</h3>
+                                            <h3 class="m-3">Experience and Diplom</h3>
                                             <div>{{$parametre->experience}}</div>
                                         @endif
                                     </div>
@@ -151,7 +151,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-12">
+                                                        {{-- <div class="col-md-12">
                                                             @php
                                                                 $now = Carbon\Carbon::now();
 
@@ -177,7 +177,7 @@
                                                                             <div class="d-flex justify-content-center bg-primary p-3 rounded-pill">
                                                                                 <input type="hidden" class="get-day" name="" value="{{ $day }}">
                                                                                 <input type="hidden" class="get-month" name="" value="{{ $month }}">
-
+                                                                                <input type="hidden" class="get-year" value="">
                                                                                 {{ Carbon\Carbon::createFromDate($currentYear, $month, $day)->format('D. d/m') }}
                                                                             </div>
                                                                             <div class="vertical-scroll scroll-demo scroll-b-none mt-5">
@@ -290,7 +290,134 @@
                                                                     @endfor
                                                                 @endfor
                                                             </div>
+                                                        </div> --}}
+                                                        <div class="col-md-12">
+                                                            @php
+                                                                $now = Carbon\Carbon::now();
+                                                                $currentYear = $now->year;
+                                                            @endphp
+                                                            <div class="owl-carousel owl-theme" id="owl-carousel-13">
+                                                                @for($i = 0; $i < 6; $i++)
+                                                                    @php
+                                                                        $month = $now->copy()->addMonths($i);
+                                                                        $daysInMonth = $month->daysInMonth;
+                                                                        $currentMonth = $month->month;
+                                                                        $currentYear = $month->year;
+                                                                    @endphp
+                                                                    @for($day = ($i == 0 ? $now->day : 1); $day <= $daysInMonth; $day++)
+                                                                        @php
+                                                                            $currentDate = Carbon\Carbon::createFromDate($currentYear, $currentMonth, $day);
+                                                                            $fullDayName = $currentDate->format('l');
+                                                                        @endphp
+                                                                        <div class="item">
+                                                                            <div class="d-flex justify-content-center bg-primary p-3 rounded-pill">
+                                                                                <input type="hidden" class="get-day" name="" value="{{ $day }}">
+                                                                                <input type="hidden" class="get-month" name="" value="{{ $currentMonth }}">
+                                                                                <input type="hidden" class="get-year" value="{{ $currentYear }}">
+                                                                                {{ $currentDate->format('D. d/m') }}
+                                                                            </div>
+                                                                            <div class="vertical-scroll scroll-demo scroll-b-none mt-5">
+                                                                                <div class="list-group">
+                                                                                    @php $flag = 0; @endphp
+                                                                                    @foreach ($workhours as $work)
+                                                                                        @php $flag == 1 ? '' : $period = [] @endphp
+                                                                                        @if (strtolower($fullDayName) === $work->day_of_week)
+                                                                                            @php
+                                                                                                $startTime = Carbon\Carbon::parse($work->start_time) ?? null;
+                                                                                                $endTime = Carbon\Carbon::parse($work->end_time) ?? null;
+                                                                                                if ($startTime && $endTime) {
+                                                                                                    $periodStart = $startTime->copy();
+                                                                                                    while ($periodStart->lessThanOrEqualTo($endTime)) {
+                                                                                                        $period[] = $periodStart->copy();
+                                                                                                        $periodStart->addMinutes($difftime->duree_appointments);
+                                                                                                    }
+
+                                                                                                    if ($currentDate->isToday()) {
+                                                                                                        $isNot = true;
+                                                                                                        foreach ($period as $key => $datetime) {
+                                                                                                            if ($datetime->greaterThan($now)) {
+                                                                                                                $period = array_slice($period, $key); // Discard past time slots
+                                                                                                                $isNot = false;
+                                                                                                                break;
+                                                                                                            }
+                                                                                                        }
+                                                                                                        if ($isNot) { $period = []; }
+                                                                                                    }
+                                                                                                }
+                                                                                                if ($work->day_off == 'active') {
+                                                                                                    $period = [];
+                                                                                                }
+                                                                                                $flag = 1;
+                                                                                                $checkday = $work->day_off === 'disable';
+                                                                                            @endphp
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                    @php
+                                                                                        $date = Carbon\Carbon::createFromFormat('Y-m-d', $currentYear . '-' . $currentMonth . '-' . $day);
+                                                                                        foreach ($holidays as $holiday) {
+                                                                                            $holidayStartDate = Carbon\Carbon::parse($holiday->date_start)->format('Y-m-d');
+                                                                                            $holidayEndDate = Carbon\Carbon::parse($holiday->date_end)->addDays(1)->format('Y-m-d');
+                                                                                            if ($holidayEndDate === $holidayStartDate && $date->format('Y-m-d') === $holidayStartDate) {
+                                                                                                foreach ($period as $key => $datetime) {
+                                                                                                    if ($datetime->between($holiday->time_start, $holiday->time_end)) {
+                                                                                                        unset($period[$key]);
+                                                                                                    }
+                                                                                                }
+                                                                                            } elseif ($date->between($holidayStartDate, $holidayEndDate)) {
+                                                                                                if ($date->format('Y-m-d') === $holidayStartDate) {
+                                                                                                    $newPeriod = [];
+                                                                                                    $startTime = Carbon\Carbon::parse($holiday->time_start);
+                                                                                                    foreach ($period as $datetime) {
+                                                                                                        if ($datetime->lessThan($startTime)) {
+                                                                                                            $newPeriod[] = $datetime->copy();
+                                                                                                        } else {
+                                                                                                            break; // Stop adding time slots once we reach the holiday start time
+                                                                                                        }
+                                                                                                    }
+                                                                                                    $period = $newPeriod;
+                                                                                                } elseif ($date->format('Y-m-d') === $holidayEndDate) {
+                                                                                                    $newPeriod = [];
+                                                                                                    $endTime = end($period);
+                                                                                                    $holidayEndTime = Carbon\Carbon::parse($holiday->time_end);
+                                                                                                    foreach ($period as $datetime) {
+                                                                                                        if ($datetime->greaterThanOrEqualTo($holidayEndTime)) {
+                                                                                                            $newPeriod[] = $datetime->copy();
+                                                                                                        }
+                                                                                                    }
+                                                                                                    $period = $newPeriod;
+                                                                                                } else {
+                                                                                                    $period = [];
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                        foreach ($appointments as $appointment) {
+                                                                                            $date_appointment = Carbon\Carbon::parse($appointment->appontment_date)->format('Y-m-d');
+                                                                                            $start_at = Carbon\Carbon::parse($appointment->start_at);
+                                                                                            if ($date->format('Y-m-d') === $date_appointment) {
+                                                                                                foreach ($period as $key => $datetime) {
+                                                                                                    if ($datetime->eq($start_at)) {
+                                                                                                        // Remove the time slot from $period
+                                                                                                        unset($period[$key]);
+                                                                                                        // Exit the loop for this appointment
+                                                                                                        break;
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    @endphp
+                                                                                    @if ($checkday ?? false)
+                                                                                        @foreach ($period as $datetime)
+                                                                                            <a class="list-group-item list-group-item-action time-link list-hover-primary" href="javascript:void(0)" data-time="{{ $datetime->format('G:i') }}">{{ $datetime->format('G:i') }}</a>
+                                                                                        @endforeach
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endfor
+                                                                @endfor
+                                                            </div>
                                                         </div>
+
                                                     </div>
                                                     <div class="row">
                                                         <div class="row">
@@ -351,7 +478,12 @@
 
 
 @section('script')
+<script>
+    function errorMsg(){
+        swal("Error!", 'You need to login first', "error");
+    }
 
+</script>
 
 
  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -359,8 +491,8 @@
      crossorigin=""></script>
 
     <script>
-        async function getCoordinates(address) {
-            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+        async function getCoordinates(query) {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
             const data = await response.json();
             if (data.length > 0) {
                 return {
@@ -368,12 +500,13 @@
                     lon: data[0].lon
                 };
             } else {
-                throw new Error('Address not found');
+                throw new Error('Location not found');
             }
         }
 
-        async function initializeMap(address) {
+        async function initializeMap(address, city) {
             try {
+                // Try to get coordinates for the full address
                 const coords = await getCoordinates(address);
                 const map = L.map('map').setView([coords.lat, coords.lon], 13);
                 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -386,15 +519,32 @@
                     .openPopup();
             } catch (error) {
                 console.error(error);
+                try {
+                    // If full address not found, fallback to city coordinates
+                    const cityCoords = await getCoordinates(city);
+                    const map = L.map('map').setView([cityCoords.lat, cityCoords.lon], 13);
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    }).addTo(map);
+
+                    L.marker([cityCoords.lat, cityCoords.lon]).addTo(map)
+                        .bindPopup(`<b>${city}</b>`)
+                        .openPopup();
+                } catch (cityError) {
+                    console.error('City not found:', cityError);
+                }
             }
         }
-         var city = "{{ $doctor->city->nom_city }}";
+
+        var city = "{{ $doctor->city->nom_city }}";
         var address = "{{ $doctor->address }}";
         var zip_code = "{{ $doctor->zip_code }}";
         const fullAddress = `${zip_code}, ${address}, ${city}`;
-    
-        initializeMap(fullAddress);
+
+        initializeMap(fullAddress, city);
     </script>
+
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
@@ -424,7 +574,7 @@
             var controle= $('input[name="controle"]:checked').val();
             var reason= $('select[name="reason_consult"] option:selected').val();
             var medical_information= $('textarea[name="medical_information"]').val();
-            var year= {{ $currentYear }};
+            var year= $('.time-link.clicked').closest('.item').find('.get-year').val();
             var month= $('.time-link.clicked').closest('.item').find('.get-month').val();
             var time= $('.time-link.clicked').data('time');
             var day=  $('.time-link.clicked').closest('.item').find('.get-day').val();

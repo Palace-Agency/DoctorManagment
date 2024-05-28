@@ -41,8 +41,8 @@
                                                 <div class="btn-group">
                                                     <button class="btn border-0 text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more text-black"></i></button>
                                                     <ul class="dropdown-menu dropdown-block">
-                                                        <li> <a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setDoctorId('{{ $ordonnance->doctor->id }}')"  data-bs-target="#exampleModalLong">view information</a></li>
-                                                        <li><a class="dropdown-item" href="{{route('pdf.ordonnance',$ordonnance->id)}}">Download Ordonnance</a></li>
+                                                        <li> <a class="dropdown-item fw-bold" type="button" data-bs-toggle="modal" onclick="setDoctorId('{{ $ordonnance->doctor->id }}')"  data-bs-target="#exampleModalLong">view information</a></li>
+                                                        <li><a class="dropdown-item fw-bold" href="{{route('pdf.ordonnance',$ordonnance->id)}}">Download Ordonnance</a></li>
                                                     </ul>
                                                 </div>
                                             </td>

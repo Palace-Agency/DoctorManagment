@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class ExpenseController extends Controller
 {
     public function index(){
-        $expenses = Expense::where('doctor_id',Auth::user()->id)->get();
+        $expenses = Expense::with('categoryExpense:id,name')->where('doctor_id',Auth::user()->id)->get();
+
 
         return view('doctor.expenses.index',compact('expenses'));
     }
@@ -41,7 +42,7 @@ class ExpenseController extends Controller
 
     public function edit(  $id){
         $categoryexps = CategoryExpense::where('doctor_id', Auth::user()->id)->get();
-        $expense = Expense::where('id',$id)->first();
+        $expense = Expense::where('doctor_id', Auth::user()->id)->where('id',$id)->first();
         return view('doctor.expenses.edit',compact('expense', 'categoryexps'));
     }
     public function update(Request $request,$id){

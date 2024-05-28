@@ -2,12 +2,8 @@
     <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 footer-copyright d-flex flex-wrap align-items-center justify-content-between">
-        <p class="mb-0 f-w-600">Copyright 2023 © Mofi theme by pixelstrap  </p>
-        <p class="mb-0 f-w-600">Hand crafted & made with
-            <svg class="footer-icon">
-            <use href="{{asset('assets/svg/icon-sprite.svg#footer-heart')}}"> </use>
-            </svg>
-        </p>
+        <p class="mb-0 f-w-600">Copyright 2024 © E-HEALTH by Palace Digital Agency  </p>
+
         </div>
     </div>
     </div>

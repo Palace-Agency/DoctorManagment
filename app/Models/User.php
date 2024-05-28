@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable , HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
 
     /**
@@ -35,6 +35,7 @@ class User extends Authenticatable
         'isActive',
         'salary',
         'role_id',
+        'isValideEmail',
     ];
 
     /**
@@ -66,6 +67,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(Parametre::class, 'doctor_id');
     }
-
-
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Doctor;
 
 use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountPatientMail;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Medicament;
@@ -14,7 +15,6 @@ use App\Models\User;
 use App\Models\Vacation;
 use App\Models\WorkingHour;
 use Carbon\Carbon;
-use App\Mail\AccountPatientMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

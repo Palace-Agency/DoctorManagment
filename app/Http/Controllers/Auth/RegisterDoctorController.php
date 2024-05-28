@@ -45,6 +45,7 @@ class RegisterDoctorController extends Controller
             'phone_number' => $request->phone,
             'email' => $request->email,
             'password' => Hash::make($request->password) ,
+            'isValideEmail' => '0',
         ]);
         $user->assignRole('doctor');
         $selectedspeciality = $request->input('specialities');
@@ -57,7 +58,7 @@ class RegisterDoctorController extends Controller
         ]);
         Mail::to($user->email)->send(new AccountActiveDoctor($user));
 
-        return redirect()->route('login')->with("success","You need to activate you account");
+        return redirect()->route('login')->with("success","We sent email to continue your registration");
     }
 
     public function active($id){
@@ -89,6 +90,7 @@ class RegisterDoctorController extends Controller
         $doctor = User::findOrFail($request->idDoc);
         $doctor->address = $request->adresse;
         $doctor->zip_code = $request->zip_code;
+        $doctor->isValideEmail = '1';
         $doctor->update();
         $paramDoc = Parametre::where('doctor_id',$request->idDoc)->first();
         $paramDoc->language_spoken = $serializedlanguages;

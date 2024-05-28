@@ -2,7 +2,7 @@
 @extends('layouts.master')
 @section('road')
     <div class="col-4 col-xl-4 page-title">
-        <h4 class="f-w-700">Patient Management</h4>
+        <h4 class="f-w-700">Patients Management</h4>
         <nav>
             <ol class="breadcrumb justify-content-sm-start align-items-center mb-0">
                 <li class="breadcrumb-item"><a href="{{route('admin.dash')}}"> <i data-feather="home"> </i></a></li>
@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>
-                            Patient
+                            Patients
                             <a href="{{route('patient.create')}}" class="btn btn-primary float-end">Add patient</a>
                         </h4>
                     </div>
@@ -47,12 +47,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $id = 1 ;@endphp
                                     @foreach ($patients->filter(function ($patient) {
                                             return $patient->hasRole('patient');
                                         }) as $patient)
                                         <tr>
-
-                                            <td>{{$patient->id}}</td>
+                                            <td>{{$id++}}</td>
                                             <td><img src="{{asset('/images/patient/'.$patient->image)}}" width="80px" height="80px" alt=""></td>
                                             <td>{{$patient->fname}}</td>
                                             <td>{{$patient->lname}}</td>

@@ -102,7 +102,7 @@
             <div class="container">
                 <div class="row w-100">
                     <div class="col-md-12 footer-copyright d-flex flex-wrap align-items-center justify-content-center">
-                        <p class="mb-0 f-w-600">Copyright 2023 © Mofi theme by pixelstrap </p>
+                        <p class="mb-0 f-w-600">Copyright 2024 © E-Health by Palace Digital Agency  </p>
 
                     </div>
                 </div>

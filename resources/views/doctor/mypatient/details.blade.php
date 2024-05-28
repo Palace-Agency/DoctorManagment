@@ -16,7 +16,7 @@
                             class="icofont icofont-users-alt-1"></i>&nbsp;Patients > </a> <a
                         href="">{{ $patient->fname . ' ' . $patient->lname }}</a>
                     <button class="btn btn-success float-end" type="button" data-bs-toggle="modal"
-                        data-bs-target=".bd-example-modal-lg">write appointments</button>
+                        data-bs-target=".bd-example-modal-lg">Book an appointment</button>
 
                 </h4>
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
@@ -24,7 +24,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="myExtraLargeModal">Create appointment for the patient</h4>
+                                <h4 class="modal-title" id="myExtraLargeModal">Book an appointment for the patient {{$patient->fname}}</h4>
                                 <button class="btn-close py-0" type="button" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -85,10 +85,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                {{-- <div class="col-md-6">
                                                     <a href="" class="w-100 p-0"><span class="float-start">choose the
                                                             date</span><i class="icofont icofont-time "></i></a>
-                                                </div>
+                                                </div> --}}
                                             </div>
 
                                         </div>
@@ -96,7 +96,7 @@
                                     <div class="row agenda-days">
                                         <div class="card">
                                             <div class="card-header">
-                                                agenda-days
+                                                choose the date and the time
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
@@ -712,7 +712,7 @@
                     <form action="{{ route('mypatient.observation', $patient->id) }}" method="POST"
                         id="formObservation">
                         @csrf
-                        method
+
                         <textarea class="form-control" value="{{ old('observation') }}" name="observation" id="" rows="3"></textarea>
                         <div class="modal-footer border-0">
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -1049,7 +1049,21 @@
             });
         }
         getObservations({{ $patient->id }});
-
+        function hours(hour){
+            // Diviser la chaîne en heures, minutes et secondes
+            var parts = hour.split(':');
+            // Extraire les heures, minutes et secondes de la chaîne
+            var hours = parseInt(parts[0]);
+            var minutes = parseInt(parts[1]);
+            // Créer un nouvel objet Date avec les heures et minutes extraites
+            var startAt = new Date();
+            startAt.setHours(hours);
+            startAt.setMinutes(minutes);
+            // Formater l'heure
+            var formattedTime = startAt.getHours() + ":" + startAt.getMinutes();
+            // Retourner l'heure formatée
+            return formattedTime;
+        }
         function getAppointment(patientId) {
             $.ajax({
                 url: "{{ route('appointment.get', ':id') }}".replace(':id', patientId),
@@ -1063,17 +1077,19 @@
                         <div class="col-md-4">
                             <div class="card mt-3" style="min-height: 210px">
                                 <div class="card-header border-t-info">
-                                    <h4>${formatDate(appointment.appontment_date)}
+                                    <h4>start at : ${hours(appointment.start_at)}
                                         <a class="text-danger float-end" href="{{ route('appointmentget.deleted', '') }}/${appointment.id}" onclick="confirm(event)"><i class="icofont icofont-ui-delete"></i></a>
-                                    </h4>
+
+                                        </h4>
+                                        <small class="text-mute float-end"> date appointment : ${formatDate(appointment.appontment_date)}</small>
                                 </div>
                                 <div class="card-body">
                                     <p class="mt-1 f-m-light text-dark">the reason of the consultation is : <strong>${appointment.motif.nom_motif}</strong></p>
                                 </div>
                                 <div class="card-footer">
-                                    <ul class="action">
-                                            <li><a class="text-info float-start" type="button" data-bs-toggle="modal" onclick="setAppointmentId('${appointment.id}')" data-bs-target="#updateAppointment"><i class="icofont icofont-edit"></i></a></li>
-                                    </ul>
+                                            <a class="text-info float-start" type="button" data-bs-toggle="modal" onclick="setAppointmentId('${appointment.id}')" data-bs-target="#updateAppointment"><i class="icofont icofont-edit"></i></a>
+                                            <span class="float-end text-capitalize fw-bold"><strong>${appointment.status}</strong></span>
+
                                 </div>
                             </div>
                         </div>

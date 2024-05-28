@@ -132,12 +132,27 @@ class EmployeeController extends Controller
     }
 
     public function givePermissionsStore(Request $request ,$idemployee){
+        
         $request->validate([
-            "permission" => "required"
+            "permission" => "array" // Expecting an array of permissions
         ]);
-        $employee = User::findOrFail($idemployee);
-        $employee->givePermissionTo($request->permission);
-        return redirect()->back()->with('success', 'the permission added to the role with success');
 
+        $employee = User::findOrFail($idemployee);
+        $submittedPermissions = $request->input('permission', []); // Get the submitted permissions or an empty array if none
+        $existingPermissions = $employee->permissions->pluck('name')->toArray(); // Get the names of the existing permissions
+
+        // Permissions to add
+        $permissionsToAdd = array_diff($submittedPermissions, $existingPermissions);
+        if (!empty($permissionsToAdd)) {
+            $employee->givePermissionTo($permissionsToAdd);
+        }
+
+        // Permissions to remove
+        $permissionsToRemove = array_diff($existingPermissions, $submittedPermissions);
+        if (!empty($permissionsToRemove)) {
+            $employee->revokePermissionTo($permissionsToRemove);
+        }
+
+        return redirect()->back()->with('success', 'Permissions updated successfully.');
     }
 }

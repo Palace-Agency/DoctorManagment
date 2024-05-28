@@ -49,19 +49,20 @@
                                             <td>{{$appointment->appontment_date}}</td>
                                             <td>{{$appointment->start_at}}</td>
                                             <td><span class="{{$appointment->status == "pending" ? 'badge text-bg-warning' :
-                                                        ($appointment->status == "inprogress" ? 'badge text-bg-primary badge-small' : ($appointment->status == "cancelled" ? 'badge text-bg-danger badge-small' :'badge bg-warning'))}}"><strong class="text-light text-capitalize">{{$appointment->status}}</strong></span></td>
+                                                        ($appointment->status == "inprogress" ? 'badge text-bg-primary badge-small' :
+                                                        ($appointment->status == "cancelled" ? 'badge text-bg-danger badge-small' :
+                                                        ($appointment->status == "completed" ? 'badge text-bg-success badge-small' : 'badge bg-warning')))}}"><strong class="text-light text-capitalize">{{$appointment->status}}</strong></span></td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button class="btn border-0 text-black" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="icon-more text-black"></i></button>
                                                     <ul class="dropdown-menu dropdown-block">
-                                                        <li> <a class="dropdown-item" type="button" data-bs-toggle="modal" onclick="setDoctorId('{{ $appointment->doctor->id }}')"  data-bs-target="#exampleModalLong">view information</a></li>
-                                                        @if($appointment->status != 'cancelle')
+                                                        <li> <a class="dropdown-item fw-bold text-dark" type="button" data-bs-toggle="modal" onclick="setDoctorId('{{ $appointment->doctor->id }}')"  data-bs-target="#exampleModalLong">view informations</a></li>
+                                                        @if(!in_array($appointment->status, ['cancelled', 'completed']))
                                                             <form id="" method="POST" action="{{route('client.cancelle',$appointment->id)}}">
                                                                 @csrf
                                                                 <input type="hidden" class="status" name="status" value="cancelled">
-                                                                <button class="dropdown-item text-danger" type="submit">Cancelle Appointment</button>
+                                                                <button class="dropdown-item text-danger fw-bold" type="submit">Cancelle Appointment</button>
                                                             </form>
-
                                                         @endif
                                                     </ul>
                                                 </div>
@@ -123,7 +124,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     infoModal(response);
                 }
             });

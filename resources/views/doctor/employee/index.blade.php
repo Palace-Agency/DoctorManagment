@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header border-0">
                         <h4>
-                            <h4>Management Employees</h4>
+                            <h4>Employee Management</h4>
                             <a href="{{route('employee.create')}}" class="btn btn-primary float-end">Add Emplyee</a>
 
                         </h4>
@@ -74,11 +74,11 @@
                                                         </span>
                                                     </li>
                                                     {{-- @if(auth()->user()->can('view permissions')) --}}
-                                                    <li class="m-l-10">
+                                                    {{-- <li class="m-l-10">
                                                         <a href="{{route('employee.givepermissions',$employee->id)}}">
                                                             <i class="fa fa-sliders f-20"></i>
                                                         </a>
-                                                    </li>
+                                                    </li> --}}
                                                     {{-- @endif --}}
                                                 </ul>
                                             </td>
