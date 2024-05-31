@@ -8,6 +8,7 @@
     <meta name="keywords" content="admin template, Mofi admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
     @include('layouts.head')
+    
     <title>@yield('title')</title>
 
   </head>
@@ -37,7 +38,7 @@
         <!-- Page Sidebar Start-->
         @include('layouts.sidebar')
         <!-- Page Sidebar Ends-->
-        <div class="page-body" style="min-height: 574px">
+        <div class="page-body" style="min-height: 578px">
           <!-- Container-fluid starts-->
          @yield('content')
           <!-- Container-fluid Ends-->

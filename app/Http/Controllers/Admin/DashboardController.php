@@ -7,17 +7,18 @@ use App\Models\Appointment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller{
     public function index(){
         $now = Carbon::now();
-        $patient = User::role('patient')->get();
-        $doctors = User::role('doctor')->get();
+        // $patient = User::role('patient')->whereMonth('created_at', $now->month)->get();
+        // $doctors = User::role('doctor')->whereMonth('created_at', $now->month)->get();
 
+        // $appointmentsInMonth = Appointment::whereMonth('appontment_date', $now->month)
+        //                             ->get()->count();
 
         // Retrieve appointments for the current month and year
-        $appointmentsInYear = Appointment::whereYear('appontment_date', $now->year)
-                                    ->get();
         // $janv = Appointment::whereMonth('appointments.appontment_date', '=', 1)->where('status', '=', 'completed')->count();
         // $fevr = Appointment::whereMonth('appointments.appontment_date', '=', 2)->where('status', '=', 'completed')->count();
         // $mars = Appointment::whereMonth('appointments.appontment_date', '=', 3)->where('status', '=', 'completed')->count();
@@ -82,6 +83,73 @@ class DashboardController extends Controller{
         // ];
 
 
-        return view('admin.dashboard',compact('patient','doctors', 'appointmentsInYear','now', 'patientcount', 'doctorcount'));
+        return view('admin.dashboard',compact('now', 'patientcount', 'doctorcount'));
+    }
+
+
+    // public function fetchTotalAppointmentByRangeDate(Request $request){
+    //     $current = Carbon::now();
+    //     $months = $request->input('month');
+    //     $appointmentCount = 0;
+
+    //     if (is_array($months) && count($months) == 1) {
+    //         // Only one month is selected
+    //         $selectedMonth = $months[0]['value'];
+    //         $appointmentCount = Appointment::whereMonth('appontment_date', $selectedMonth)->count();
+    //         $patients = User::role('patient')->whereMonth('created_at', $selectedMonth)->count();
+    //         $doctors = User::role('doctor')->whereMonth('created_at', $selectedMonth)->count();
+    //     } else if (is_array($months) && count($months) > 1) {
+    //         // More than one month is selected, use whereIn to match exactly the selected months
+    //         $monthValues = array_column($months, 'value');
+    //         $patients = User::role('patient')->whereIn(DB::raw('MONTH(created_at)'), $monthValues)->count();
+    //         $doctors = User::role('doctor')->whereIn(DB::raw('MONTH(created_at)'), $monthValues)->count();
+    //         $appointmentCount = Appointment::whereIn(DB::raw('MONTH(appontment_date)'), $monthValues)->count();
+    //     } else {
+    //         // No months selected, use the current month
+    //         $patients = User::role('patient')->whereMonth('created_at', $current->month)->count();
+    //         $doctors = User::role('doctor')->whereMonth('created_at', $current->month)->count();
+
+    //         $appointmentCount = Appointment::whereMonth('appontment_date', $current->month)->count();
+    //     }
+
+    //     return response()->json([$appointmentCount,$patients,$doctors]);
+    // }
+
+
+    public function fetchTotalAppointmentByRangeDate(Request $request)
+    {
+        // dd($request);
+        $appointmentCount = 0;
+
+        $dateInput = $request->month;
+
+        if (strpos($dateInput, ' to ') !== false) {
+            // Date range provided
+            $date = explode(' to ', $dateInput);
+
+            $startDate = Carbon::createFromFormat('Y-m-d', trim($date[0]));
+            $endDate = Carbon::createFromFormat('Y-m-d', trim($date[1]));
+
+
+            if ($startDate->greaterThanOrEqualTo($endDate)) {
+                // Debugging output
+                return response()->json(['error' => 'Start date cannot be greater than or equal to end date'], 400);
+            }
+
+            $appointmentCount = Appointment::whereBetween('appontment_date', [$startDate, $endDate])->count();
+            $patients = User::role('patient')->whereBetween('created_at', [$startDate, $endDate])->count();
+            $doctors = User::role('doctor')->whereBetween('created_at', [$startDate, $endDate])->count();
+
+        } else {
+
+            $singleDate = Carbon::createFromFormat('Y-m-d', trim($dateInput));
+            $month = $singleDate->format('F'); // Full month name
+            $appointmentCount = Appointment::where('appontment_date', $singleDate)->count();
+            $patients = User::role('patient')->whereDate('created_at', $singleDate)->count();
+            $doctors = User::role('doctor')->whereDate('created_at', $singleDate)->count();
+
+        }
+
+        return response()->json([$appointmentCount, $patients, $doctors]);
     }
 }

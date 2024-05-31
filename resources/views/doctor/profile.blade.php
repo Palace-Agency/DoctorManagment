@@ -2,6 +2,7 @@
 @extends('layouts_user.master')
 @section('links')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+    
 @endsection
 @section('content')
     <div class="container-fluid calendar-basic">
@@ -151,7 +152,7 @@
                             @enderror
                         </div>
                         <div class="col-md-6 mt-2">
-                            <label class="form-label">Experience and Diplome</label>
+                            <label class="form-label">Experience and Diploma</label>
                             <textarea class="form-control @error('experience_diplome') is-invalid @enderror" name="experience_diplome" id=""  rows="3">{{$parametres->experience}}</textarea>
                             @error('experience_diplome')
                                 <span class="invalid-feedback" role="alert">

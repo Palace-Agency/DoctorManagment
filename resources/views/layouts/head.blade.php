@@ -56,4 +56,5 @@
         width: 20px;
     }
 </style>
+
 @yield('links')

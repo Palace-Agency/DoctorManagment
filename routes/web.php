@@ -63,6 +63,8 @@ Route::get('/all-doctors', [HomeController::class, 'allDoctors'])->name('alldoct
 Route::group(['middleware'=>'auth'],function(){
     Route::get('generate-pdf/{idordonnance}',[OrdonnanceController::class, 'generatePdf'])->name('pdf.ordonnance');
     Route::prefix('/admin')->middleware('role:admin')->group( function(){
+        Route::get('/fetch-appointments-by-month', [DashboardController::class, 'fetchTotalAppointmentByRangeDate'])->name('fetchTotalAppointmentByRangeDate');
+
         Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dash');
         Route::resource('permission', PermissionController::class);
         Route::delete('/permission/{idpermission}/delete', [PermissionController::class, 'destroy'])->name('permission.destroy');

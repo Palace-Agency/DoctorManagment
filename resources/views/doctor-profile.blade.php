@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         @if($parametre->experience)
-                                            <h3 class="m-3">Experience and Diplom</h3>
+                                            <h3 class="m-3">Experience and Diploma</h3>
                                             <div>{{$parametre->experience}}</div>
                                         @endif
                                     </div>

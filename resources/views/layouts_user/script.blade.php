@@ -43,6 +43,8 @@
 {{-- <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script> --}}
 <!-- Plugin used-->
 {{-- <script>new WOW().init();</script> --}}
+<script src="{{asset('assets/js/flat-pickr/flatpickr.js')}}"></script>
+    <script src="{{asset('assets/js/flat-pickr/custom-flatpickr.js')}}"></script>
 
 
 
